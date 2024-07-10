@@ -1,38 +1,64 @@
 'use client';
 import { FormEvent, useState } from 'react';
 
-interface FormData {
+interface StartFormProps {
   team: string;
   nickname: string;
 }
+interface StartErrorProps {
+  team: boolean;
+  nickname: boolean;
+}
 
 const StartForm = () => {
-  const formAction = (event: FormEvent<HTMLFormElement>) => {
+  const [form, setForm] = useState<StartFormProps>({ team: '', nickname: '' });
+  const [error, setError] = useState<StartErrorProps>({
+    team: false,
+    nickname: false,
+  });
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    const data: FormData = {
-      team: formData.get('team') as string,
-      nickname: formData.get('nickname') as string,
-    };
-    console.log(data);
-  };
-  const [selectedTeam, setSelectedTeam] = useState<string>('');
-  const handleTeamChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedTeam(event.target.value);
+    let hasError = false;
+
+    if (!form.team.length) {
+      setError((prev) => ({ ...prev, team: true }));
+      hasError = true;
+    } else {
+      setError((prev) => ({ ...prev, team: false }));
+    }
+
+    if (!form.nickname.length) {
+      setError((prev) => ({ ...prev, nickname: true }));
+      hasError = true;
+    } else {
+      setError((prev) => ({ ...prev, nickname: false }));
+    }
+
+    if (!hasError) {
+      console.log(form);
+    }
+    setTimeout(() => {
+      setError({ team: false, nickname: false });
+    }, 1000);
   };
   return (
-    <form onSubmit={formAction} className='text-center'>
+    <form onSubmit={handleSubmit} className='text-center'>
       <div className='flex flex-col my-10 gap-2'>
         <select
           id='team'
-          name='team'
-          className={`w-full h-9 p-2 font-medium rounded-md ${
-            selectedTeam === '' ? 'text-gray-400' : 'text-teal-600'
-          }`}
-          value={selectedTeam}
-          onChange={handleTeamChange}
+          value={form.team}
+          onChange={(event) =>
+            setForm((prev) => ({
+              ...prev,
+              team: event.target.value,
+            }))
+          }
+          className={`w-full h-10 p-2 font-medium rounded-md ${
+            form.team === '' ? 'text-gray-400' : 'text-teal-600'
+          }  ${error.team && 'animate-shake border-2 border-red-600'}`}
         >
-          <option value='' disabled selected>
+          <option value='' disabled>
             팀을 선택하세요
           </option>
           <option value='DevOps'>DevOps Team</option>
@@ -42,11 +68,20 @@ const StartForm = () => {
         </select>
         <input
           type='text'
-          name='nickname'
+          value={form.nickname}
+          onChange={(event) =>
+            setForm((prev) => ({
+              ...prev,
+              nickname: event.target.value,
+            }))
+          }
           placeholder='닉네임을 입력하세요'
-          className='w-full h-9 p-2 font-medium rounded-md valid:text-teal-600'
+          className={`w-full h-10 p-2 font-medium rounded-md text-teal-600 ${
+            error.nickname && 'animate-shake border-2 border-red-600'
+          }`}
         />
       </div>
+
       <button
         type='submit'
         className='bg-[#373737] rounded-lg w-full h-12 text-white active:bg-black hover:bg-slate-800 duration-150 '
