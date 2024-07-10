@@ -1,5 +1,5 @@
 import type { Config } from 'tailwindcss';
-
+import plugin from 'tailwindcss/plugin';
 const config: Config = {
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -32,6 +32,19 @@ const config: Config = {
     },
   },
 
-  plugins: [],
+  plugins: [
+    plugin(function ({ addUtilities }) {
+      addUtilities({
+        '.main-theme': {
+          backgroundColor: '#82C5B6',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          width: '100%',
+          height: '100vh',
+        },
+      });
+    }),
+  ],
 };
 export default config;
