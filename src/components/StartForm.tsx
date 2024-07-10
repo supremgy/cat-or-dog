@@ -31,7 +31,6 @@ const StartForm = () => {
           }`}
           value={selectedTeam}
           onChange={handleTeamChange}
-          required
         >
           <option value='' disabled selected>
             팀을 선택하세요
