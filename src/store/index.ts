@@ -3,22 +3,23 @@ import { createUserSlice, UserState } from './UserStore';
 import { createJSONStorage, persist } from 'zustand/middleware';
 import { createSurveySlice, SurveyState } from './SurveyStore';
 
-export const useStore = create<UserState & SurveyState>((...args) => ({
-  ...persist(createUserSlice, {
-    name: 'user-storage',
-    partialize: (state) => ({
-      team: state.team,
-      nickname: state.nickname,
-    }),
-    storage: createJSONStorage(() => localStorage),
-  })(...args),
+type AppState = UserState & SurveyState;
 
-  ...persist(createSurveySlice, {
-    name: 'survey-storage',
-    partialize: (state) => ({
-      team: state.step,
-      nickname: state.total,
+export const useStore = create<AppState>()(
+  persist(
+    (set, get, api) => ({
+      ...createUserSlice(set, get, api),
+      ...createSurveySlice(set, get, api),
     }),
-    storage: createJSONStorage(() => localStorage),
-  })(...args),
-}));
+    {
+      name: 'app-storage',
+      partialize: (state) => ({
+        team: state.team,
+        nickname: state.nickname,
+        total: state.total,
+        registerData: state.registerData,
+      }),
+      storage: createJSONStorage(() => localStorage),
+    }
+  )
+);
