@@ -36,12 +36,11 @@ const config: Config = {
     plugin(function ({ addUtilities }) {
       addUtilities({
         '.main-theme': {
-          backgroundColor: '#82C5B6',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          width: '100%',
-          height: '100vh',
+          '@apply bg-teal-200/60 flex flex-col w-full h-dvh': '',
+        },
+        '.input-theme': {
+          '@apply w-full h-10 p-2 font-medium rounded-md outline-none border-2 focus:border-teal-600 duration-150':
+            '',
         },
       });
     }),
