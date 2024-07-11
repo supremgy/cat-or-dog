@@ -1,5 +1,5 @@
 import type { Config } from 'tailwindcss';
-
+import plugin from 'tailwindcss/plugin';
 const config: Config = {
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -32,6 +32,18 @@ const config: Config = {
     },
   },
 
-  plugins: [],
+  plugins: [
+    plugin(function ({ addUtilities }) {
+      addUtilities({
+        '.main-theme': {
+          '@apply bg-teal-200/60 flex flex-col w-full h-dvh': '',
+        },
+        '.input-theme': {
+          '@apply w-full h-10 p-2 font-medium rounded-md outline-none border-2 focus:border-teal-600 duration-150':
+            '',
+        },
+      });
+    }),
+  ],
 };
 export default config;

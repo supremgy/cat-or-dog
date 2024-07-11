@@ -1,4 +1,6 @@
 'use client';
+import { useStore } from '@/store';
+import { useRouter } from 'next/navigation';
 import { FormEvent, useState } from 'react';
 
 interface StartFormProps {
@@ -17,18 +19,24 @@ const StartForm = () => {
     nickname: false,
   });
 
+  const setTeam = useStore((state) => state.setTeam);
+  const setNickname = useStore((state) => state.setNickname);
+
+  const router = useRouter();
+
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
     let hasError = false;
 
-    if (!form.team.length) {
+    if (!form.team) {
       setError((prev) => ({ ...prev, team: true }));
       hasError = true;
     } else {
       setError((prev) => ({ ...prev, team: false }));
     }
 
-    if (!form.nickname.length) {
+    if (!form.nickname) {
       setError((prev) => ({ ...prev, nickname: true }));
       hasError = true;
     } else {
@@ -36,8 +44,11 @@ const StartForm = () => {
     }
 
     if (!hasError) {
-      console.log(form);
+      setTeam(form.team);
+      setNickname(form.nickname);
+      router.push('/survey');
     }
+
     setTimeout(() => {
       setError({ team: false, nickname: false });
     }, 1000);
@@ -66,6 +77,7 @@ const StartForm = () => {
           <option value='Success'>Success Team</option>
           <option value='기업 부설 연구소'>기업 부설 연구소</option>
         </select>
+
         <input
           type='text'
           value={form.nickname}
