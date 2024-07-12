@@ -7,7 +7,7 @@ import ButtonForm from './ButtonForm';
 export default function RatingQuestion({ step, setStep }: StepProps) {
   const registerData = useStore((state) => state.registerData);
   const setRegisterData = useStore((state) => state.setRegisterData);
-
+  const setToastState = useStore((state) => state.setToastState);
   const [score, setScore] = useState<number | undefined>(
     registerData[step].score as number
   );
@@ -20,6 +20,7 @@ export default function RatingQuestion({ step, setStep }: StepProps) {
       alert('점수가 너무 낮아요!');
       return;
     }
+
     const newRegisterData = registerData.map((item, i) => {
       if (i === step) {
         return {
@@ -29,7 +30,12 @@ export default function RatingQuestion({ step, setStep }: StepProps) {
       }
       return item;
     });
-    if (score) setRegisterData(newRegisterData);
+    if (score) {
+      setRegisterData(newRegisterData);
+    } else {
+      setToastState();
+      return;
+    }
     setStep(step + 1);
   };
   const handleBack = () => {

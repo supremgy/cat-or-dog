@@ -31,7 +31,7 @@ const defaultRegisterData: StepDataProps[] = [
   },
   {
     question: '',
-    score: 0,
+    score: undefined,
   },
   {
     question: '',

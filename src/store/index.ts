@@ -7,6 +7,8 @@ type AppState = UserState &
   SurveyState & {
     modalState: boolean;
     setModalState: (modalState: boolean) => void;
+    toastState: boolean;
+    setToastState: () => void;
   };
 
 export const useStore = create<AppState>()(
@@ -16,6 +18,13 @@ export const useStore = create<AppState>()(
       ...createSurveySlice(set, get, api),
       modalState: false,
       setModalState: (modalState: boolean) => set({ modalState }),
+      toastState: false,
+      setToastState: () => {
+        set({ toastState: true });
+        setTimeout(() => {
+          set({ toastState: false });
+        }, 2000);
+      },
     }),
     {
       name: 'app-storage',

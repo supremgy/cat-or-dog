@@ -11,6 +11,8 @@ export default function SingleChoice({ step, setStep }: StepProps) {
   const registerData = useStore((state) => state.registerData);
   const setRegisterData = useStore((state) => state.setRegisterData);
   const setModalState = useStore((state) => state.setModalState);
+  const setToastState = useStore((state) => state.setToastState);
+
   const [selectedAnswer, setSelectedAnswer] = useState<number | undefined>(
     registerData[step].index as number
   );
@@ -32,6 +34,9 @@ export default function SingleChoice({ step, setStep }: StepProps) {
         return item;
       });
       setRegisterData(newRegisterData);
+    } else {
+      setToastState();
+      return;
     }
     setStep(step + 1);
   };

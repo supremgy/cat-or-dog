@@ -15,6 +15,7 @@ const config: Config = {
       },
       animation: {
         shake: 'shake .13s 3',
+        fadeOut: 'fadeOut 2s forwards',
       },
       keyframes: {
         shake: {
@@ -27,6 +28,11 @@ const config: Config = {
           '100%': {
             transform: 'translateX(-10px)',
           },
+        },
+        fadeOut: {
+          '0%': { opacity: '1' },
+          '66%': { opacity: '1' },
+          '100%': { opacity: '0' },
         },
       },
     },

@@ -10,6 +10,7 @@ export default function MultipleChoices({ step, setStep }: StepProps) {
   const setTotal = useStore((state) => state.setTotal);
   const registerData = useStore((state) => state.registerData);
   const setRegisterData = useStore((state) => state.setRegisterData);
+  const setToastState = useStore((state) => state.setToastState);
 
   const [selectedAnswer, setSelectedAnswer] = useState<number[]>(
     registerData[step].index as number[]
@@ -26,6 +27,9 @@ export default function MultipleChoices({ step, setStep }: StepProps) {
           registerData[step].answer![selectedAnswer[0]].value +
           registerData[step].answer![selectedAnswer[1]].value
       );
+    } else {
+      setToastState();
+      return;
     }
 
     router.push('/result');
