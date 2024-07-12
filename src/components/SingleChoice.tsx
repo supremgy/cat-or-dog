@@ -22,7 +22,7 @@ export default function SingleChoice({ step, setStep }: StepProps) {
   };
 
   const handleNext = () => {
-    if (selectedAnswer) {
+    if (typeof selectedAnswer === 'number') {
       const newRegisterData = registerData.map((item, i) => {
         if (i === step) {
           return {
@@ -63,7 +63,7 @@ export default function SingleChoice({ step, setStep }: StepProps) {
   };
 
   return (
-    <div className='mt-28 w-full px-8'>
+    <div className='mt-28 w-full'>
       <div className='mb-10 text-xl font-semibold w-full'>
         {registerData[step].question}
       </div>

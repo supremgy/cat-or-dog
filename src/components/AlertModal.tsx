@@ -16,8 +16,8 @@ export default function AlertModal() {
     router.push('/');
   };
   return (
-    <div className='absolute w-full h-full mx-auto bg-black/80 flex justify-center items-center'>
-      <div className='w-2/3 h-44 bg-zinc-50 rounded-xl px-3 py-5'>
+    <div className='absolute left-0 w-full h-full mx-auto bg-black/80 flex justify-center items-center'>
+      <div className='fixed top-64 w-72 h-44 bg-zinc-50 rounded-xl px-3 py-5'>
         <section className='flex flex-col gap-3 mb-4'>
           <div className='text-center font-bold text-lg'>홈으로 가기</div>
           <div className='text-sm'>

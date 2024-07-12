@@ -57,7 +57,7 @@ export default function SurveyPage() {
     },
     extroversion: {
       question:
-        '당신의 외향성을 1(내향적)에서 5(외향적)까지 점수로 매겨주세요.',
+        '당신의 외향성을 1(내향적)에서 10(외향적)까지 점수로 매겨주세요.',
     },
     agreeableness: {
       question:
