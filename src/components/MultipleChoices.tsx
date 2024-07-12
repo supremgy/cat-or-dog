@@ -17,20 +17,20 @@ export default function MultipleChoices({ step, setStep }: StepProps) {
   );
 
   const handleNext = () => {
-    const totalScore =
-      registerData.reduce((accumulator, currentValue) => {
-        return accumulator + (currentValue.score || 0);
-      }, 0) +
-      registerData[step].answer![selectedAnswer[0]].value +
-      registerData[step].answer![selectedAnswer[1]].value;
+    const totalScore = registerData.reduce((accumulator, currentValue) => {
+      return accumulator + (currentValue.score || 0);
+    }, 0);
 
     if (selectedAnswer.length === 2) {
-      setTotal(totalScore);
+      setTotal(
+        totalScore +
+          registerData[step].answer![selectedAnswer[0]].value +
+          registerData[step].answer![selectedAnswer[1]].value
+      );
     } else {
       setToastState();
       return;
     }
-    console.log(totalScore);
 
     router.push('/result');
   };
