@@ -8,6 +8,7 @@ import MultipleChoices from './MultipleChoices';
 import { useStore } from '@/store';
 import { Answer } from '@/store/SurveyStore';
 import AlertModal from './AlertModal';
+import Toast from './Toast';
 
 interface StepState {
   question: string;
@@ -26,6 +27,7 @@ export default function SurveyForm({ survey }: Props) {
   const modalState = useStore((state) => state.modalState);
   const setRegisterData = useStore((state) => state.setRegisterData);
   const registerData = useStore((state) => state.registerData);
+  const toastState = useStore((state) => state.toastState);
   useEffect(() => {
     const newRegisterData = [
       {
@@ -59,12 +61,15 @@ export default function SurveyForm({ survey }: Props) {
 
   return (
     <>
-      <div>
+      <div className='relative'>
         <ProgressBar step={step} />
-        {step === 0 && <SingleChoice step={step} setStep={setStep} />}
-        {step === 1 && <SingleChoice step={step} setStep={setStep} />}
-        {step === 2 && <RatingQuestion step={step} setStep={setStep} />}
-        {step === 3 && <MultipleChoices step={step} setStep={setStep} />}
+        <div>
+          {toastState && <Toast />}
+          {step === 0 && <SingleChoice step={step} setStep={setStep} />}
+          {step === 1 && <SingleChoice step={step} setStep={setStep} />}
+          {step === 2 && <RatingQuestion step={step} setStep={setStep} />}
+          {step === 3 && <MultipleChoices step={step} setStep={setStep} />}
+        </div>
       </div>
       {modalState && <AlertModal />}
     </>
