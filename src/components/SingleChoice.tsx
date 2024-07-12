@@ -1,6 +1,7 @@
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { useStore } from '@/store';
+import ButtonForm from './ButtonForm';
 
 export interface StepProps {
   step: number;
@@ -79,10 +80,7 @@ export default function SingleChoice({ step, setStep }: StepProps) {
           ))}
         </ul>
       )}
-      <section className='flex justify-between'>
-        <button onClick={handleBack}>이전</button>
-        <button onClick={handleNext}>다음</button>
-      </section>
+      <ButtonForm handleBack={handleBack} handleNext={handleNext} />
     </div>
   );
 }

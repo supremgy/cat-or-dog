@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { useStore } from '@/store';
 import { StepProps } from './SingleChoice';
+import ButtonForm from './ButtonForm';
 
 export default function RatingQuestion({ step, setStep }: StepProps) {
   const registerData = useStore((state) => state.registerData);
@@ -51,14 +52,11 @@ export default function RatingQuestion({ step, setStep }: StepProps) {
       </div>
       <input
         type='number'
-        className='w-1/5 h-8 rounded-lg p-2 text-teal-600'
+        className='w-1/5 h-10 text-lg rounded-md p-2 text-teal-600 mb-8 outline-none focus:border-2 focus:border-teal-600 duration-150'
         value={score}
         onChange={(event) => setScore(Number(event.target.value))}
       />
-      <section className='flex justify-between'>
-        <button onClick={handleBack}>이전</button>
-        <button onClick={handleNext}>다음</button>
-      </section>
+      <ButtonForm handleBack={handleBack} handleNext={handleNext} />
     </div>
   );
 }
