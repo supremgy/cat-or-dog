@@ -3,7 +3,6 @@ import StartForm from '@/components/StartForm';
 
 export default function Home() {
   return (
-
     <div className='main-theme'>
       <Header />
       <section className='flex flex-col items-center mt-40 gap-10 my-10 mx-4'>
