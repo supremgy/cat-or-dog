@@ -3,7 +3,7 @@ import StartForm from '@/components/StartForm';
 
 export default function Home() {
   return (
-    <div className='main-theme items-center'>
+    <div className='main-theme'>
       <Header />
       <section className='flex flex-col items-center mt-40 gap-10 my-10 mx-4'>
         <div className='text-5xl font-semibold'>Cat🐱? or Dog🐶?</div>

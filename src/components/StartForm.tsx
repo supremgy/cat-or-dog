@@ -2,6 +2,7 @@
 import { useStore } from '@/store';
 import { useRouter } from 'next/navigation';
 import { FormEvent, useState } from 'react';
+import Button from './Button';
 
 interface StartFormProps {
   team: string;
@@ -54,8 +55,8 @@ const StartForm = () => {
     }, 1000);
   };
   return (
-    <form onSubmit={handleSubmit} className='text-center'>
-      <div className='flex flex-col my-10 gap-2'>
+    <form onSubmit={handleSubmit} className='text-center mx-8'>
+      <div className='flex flex-col my-10 gap-2 items-center '>
         <select
           id='team'
           value={form.team}
@@ -65,7 +66,7 @@ const StartForm = () => {
               team: event.target.value,
             }))
           }
-          className={`w-full h-10 p-2 font-medium rounded-md ${
+          className={`input-theme ${
             form.team === '' ? 'text-gray-400' : 'text-teal-600'
           }  ${error.team && 'animate-shake border-2 border-red-600'}`}
         >
@@ -88,18 +89,12 @@ const StartForm = () => {
             }))
           }
           placeholder='닉네임을 입력하세요'
-          className={`w-full h-10 p-2 font-medium rounded-md text-teal-600 ${
+          className={`input-theme text-teal-600 ${
             error.nickname && 'animate-shake border-2 border-red-600'
           }`}
         />
       </div>
-
-      <button
-        type='submit'
-        className='bg-[#373737] rounded-lg w-full h-12 text-white active:bg-black hover:bg-slate-800 duration-150 '
-      >
-        설문 시작하기
-      </button>
+      <Button type='submit' text='시작하기' className='w-full h-12 text-xl' />
     </form>
   );
 };
