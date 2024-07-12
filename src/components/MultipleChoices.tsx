@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { StepProps } from './SingleChoice';
 import { useRouter } from 'next/navigation';
 import { useStore } from '@/store';
+import ButtonForm from './ButtonForm';
 
 export default function MultipleChoices({ step, setStep }: StepProps) {
   const router = useRouter();
@@ -76,10 +77,11 @@ export default function MultipleChoices({ step, setStep }: StepProps) {
           ))}
         </ul>
       )}
-      <section className='flex justify-between'>
-        <button onClick={handleBack}>이전</button>
-        <button onClick={handleNext}>완료</button>
-      </section>
+      <ButtonForm
+        nextText='완료'
+        handleBack={handleBack}
+        handleNext={handleNext}
+      />
     </div>
   );
 }
