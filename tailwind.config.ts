@@ -39,7 +39,11 @@ const config: Config = {
           '@apply bg-teal-200/60 flex flex-col w-full h-dvh': '',
         },
         '.input-theme': {
-          '@apply w-full h-10 p-2 font-medium rounded-md outline-none border-2 focus:border-teal-600 duration-150':
+          '@apply w-full h-10 p-2 font-medium rounded-md outline-none focus:border-2 focus:border-teal-600 duration-150':
+            '',
+        },
+        '.button-theme': {
+          '@apply bg-emerald-700/90 active:bg-emerald-950 hover:bg-emerald-800 rounded-lg text-white  duration-150':
             '',
         },
       });
