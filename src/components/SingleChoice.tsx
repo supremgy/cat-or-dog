@@ -1,4 +1,3 @@
-import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { useStore } from '@/store';
 import ButtonForm from './ButtonForm';
@@ -9,11 +8,9 @@ export interface StepProps {
 }
 
 export default function SingleChoice({ step, setStep }: StepProps) {
-  const router = useRouter();
   const registerData = useStore((state) => state.registerData);
   const setRegisterData = useStore((state) => state.setRegisterData);
-  const resetUserData = useStore((state) => state.resetUserData);
-  const resetRegisterData = useStore((state) => state.resetRegisterData);
+  const setModalState = useStore((state) => state.setModalState);
   const [selectedAnswer, setSelectedAnswer] = useState<number | undefined>(
     registerData[step].index as number
   );
@@ -40,9 +37,8 @@ export default function SingleChoice({ step, setStep }: StepProps) {
   };
   const handleBack = () => {
     if (step === 0) {
-      resetUserData();
-      resetRegisterData();
-      router.push('/');
+      setModalState(true);
+      return;
     } else {
       if (selectedAnswer) {
         const newRegisterData = registerData.map((item, i) => {

@@ -7,6 +7,7 @@ import RatingQuestion from './RatingQuestion';
 import MultipleChoices from './MultipleChoices';
 import { useStore } from '@/store';
 import { Answer } from '@/store/SurveyStore';
+import AlertModal from './AlertModal';
 
 interface StepState {
   question: string;
@@ -22,6 +23,7 @@ interface Props {
   };
 }
 export default function SurveyForm({ survey }: Props) {
+  const modalState = useStore((state) => state.modalState);
   const setRegisterData = useStore((state) => state.setRegisterData);
   const registerData = useStore((state) => state.registerData);
   useEffect(() => {
@@ -56,12 +58,15 @@ export default function SurveyForm({ survey }: Props) {
   const [step, setStep] = useState(0);
 
   return (
-    <div>
-      <ProgressBar step={step} />
-      {step === 0 && <SingleChoice step={step} setStep={setStep} />}
-      {step === 1 && <SingleChoice step={step} setStep={setStep} />}
-      {step === 2 && <RatingQuestion step={step} setStep={setStep} />}
-      {step === 3 && <MultipleChoices step={step} setStep={setStep} />}
-    </div>
+    <>
+      <div>
+        <ProgressBar step={step} />
+        {step === 0 && <SingleChoice step={step} setStep={setStep} />}
+        {step === 1 && <SingleChoice step={step} setStep={setStep} />}
+        {step === 2 && <RatingQuestion step={step} setStep={setStep} />}
+        {step === 3 && <MultipleChoices step={step} setStep={setStep} />}
+      </div>
+      {modalState && <AlertModal />}
+    </>
   );
 }
