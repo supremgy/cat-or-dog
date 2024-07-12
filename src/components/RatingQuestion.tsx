@@ -13,7 +13,7 @@ export default function RatingQuestion({ step, setStep }: StepProps) {
   );
 
   const handleNext = () => {
-    if (score && score > 5) {
+    if (score && score > 10) {
       alert('점수가 너무 높아요!');
       return;
     } else if (score && score < 1) {
@@ -52,7 +52,7 @@ export default function RatingQuestion({ step, setStep }: StepProps) {
     setStep(step - 1);
   };
   return (
-    <div className='mt-28 w-full px-8'>
+    <div className='mt-28 w-full'>
       <div className='mb-10 text-xl font-semibold'>
         {registerData[step].question}
       </div>

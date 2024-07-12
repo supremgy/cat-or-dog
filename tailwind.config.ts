@@ -42,7 +42,7 @@ const config: Config = {
     plugin(function ({ addUtilities }) {
       addUtilities({
         '.main-theme': {
-          '@apply bg-teal-200/60 flex flex-col w-full h-dvh': '',
+          '@apply bg-teal-200/60 flex flex-col w-full h-dvh px-8': '',
         },
         '.input-theme': {
           '@apply w-full h-10 p-2 font-medium rounded-md outline-none focus:border-2 focus:border-teal-600 duration-150':
