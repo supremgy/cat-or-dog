@@ -17,20 +17,20 @@ export default function MultipleChoices({ step, setStep }: StepProps) {
   );
 
   const handleNext = () => {
-    const totalScore = registerData.reduce((accumulator, currentValue) => {
-      return accumulator + (currentValue.score || 0);
-    }, 0);
+    const totalScore =
+      registerData.reduce((accumulator, currentValue) => {
+        return accumulator + (currentValue.score || 0);
+      }, 0) +
+      registerData[step].answer![selectedAnswer[0]].value +
+      registerData[step].answer![selectedAnswer[1]].value;
 
     if (selectedAnswer.length === 2) {
-      setTotal(
-        totalScore +
-          registerData[step].answer![selectedAnswer[0]].value +
-          registerData[step].answer![selectedAnswer[1]].value
-      );
+      setTotal(totalScore);
     } else {
       setToastState();
       return;
     }
+    console.log(totalScore);
 
     router.push('/result');
   };
@@ -60,7 +60,7 @@ export default function MultipleChoices({ step, setStep }: StepProps) {
     }
   };
   return (
-    <div className='mt-28 w-full px-8'>
+    <div className='mt-28 w-full'>
       <div className='mb-10 text-xl font-semibold'>
         {registerData[step].question}
       </div>
