@@ -3,39 +3,55 @@ import { useStore } from '@/store';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import Button from './Button';
+import { ResultType } from '@/app/result/page';
+import Chart from './Chart';
+import { Member } from '@/app/dashboard/page';
+import { calculateTotalData, description } from '@/app/util/result';
 
-interface ContentProps {
-  emoji: string;
-  title: string;
-  detail: string;
-}
-export interface Props {
-  type: {
-    cat: ContentProps;
-    dog: ContentProps;
-  };
+interface ResultProps {
+  result: ResultType;
+  teamResult: Member[];
 }
 
-export default function ResultForm({ type }: Props) {
+export default function ResultForm({ result, teamResult }: ResultProps) {
   const router = useRouter();
+
+  const team = useStore((state) => state.team);
   const total = useStore((state) => state.total);
-  const resetRegisterData = useStore((state) => state.resetRegisterData);
-  const resetUserData = useStore((state) => state.resetUserData);
-  const animalType = total < 15 ? type.dog : type.cat;
+  const nickname = useStore((state) => state.nickname);
+  const resetAllData = useStore((state) => state.resetAllData);
+
+  const totalData = calculateTotalData(teamResult);
+
   const handleGoHome = () => {
-    resetUserData();
-    resetRegisterData();
+    resetAllData();
     router.push('/');
   };
+
   return (
-    <div className='mt-10'>
-      <section>
-        <div className='text-center text-8xl'>{animalType.emoji}</div>
-        <div className='mt-10 text-center text-lg font-semibold'>
-          {animalType.title}
+    <div className='mt-14'>
+      <div className='text-center mb-6'>
+        <div className='mb-4 text-lg'>
+          <b>{nickname}님</b>께서 생각하시는 <b>이길영</b> 지원자는?
         </div>
-        <div className='mt-5'>{animalType.detail}</div>
-      </section>
+        <div className='font-bold text-xl mb-6'>
+          {description(total, result)}
+        </div>
+        <div>같은 팀의 결과를 확인해 보세요!</div>
+      </div>
+      <Chart
+        title={`${team} Team's Results`}
+        databases={[
+          {
+            label: '팀원 수',
+            data: totalData,
+            backgroundColor: 'rgba(0, 255, 72, 0.2)',
+            borderColor: 'rgb(11, 107, 0)',
+            borderWidth: 1,
+          },
+        ]}
+        labels={['강추! 😆', '추천 😁', '고려 🤔']}
+      />
       <section className='flex justify-center mt-10'>
         <Button text='홈으로' className='w-20 h-10' onClick={handleGoHome} />
       </section>
