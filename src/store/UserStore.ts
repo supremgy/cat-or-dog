@@ -1,23 +1,17 @@
 import { StateCreator } from 'zustand';
-export interface UserState {
+export interface UserStoreState {
   total: number;
   team: string;
   nickname: string;
-  setTotal: (total: number) => void;
+  setTotal: (score: number) => void;
   setTeam: (team: string) => void;
   setNickname: (nickname: string) => void;
-  resetUserData: () => void;
 }
-export const createUserSlice: StateCreator<UserState> = (set) => ({
+export const createUserSlice: StateCreator<UserStoreState> = (set) => ({
   total: 0,
   team: '',
   nickname: '',
-  setTotal: (total: number) => set({ total }),
+  setTotal: (score: number) => set((state) => ({ total: state.total + score })),
   setTeam: (team: string) => set({ team }),
   setNickname: (nickname: string) => set({ nickname }),
-  resetUserData: () => {
-    set({ total: 0 });
-    set({ team: '' });
-    set({ nickname: '' });
-  },
 });
