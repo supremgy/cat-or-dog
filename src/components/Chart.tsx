@@ -20,31 +20,23 @@ ChartJS.register(
   Legend
 );
 
+type Database = {
+  label: string;
+  data: number[];
+  backgroundColor: string;
+  borderColor?: string;
+  borderWidth: number;
+};
 interface ChartProps {
-  catData: number[];
-  dogData: number[];
+  labels: string[];
+  databases: Database[];
   title: string;
 }
 
-export default function Chart({ catData, dogData, title }: ChartProps) {
+export default function Chart({ labels, databases, title }: ChartProps) {
   const data = {
-    labels: ['DevOps', 'Product', 'Success', '기업 부설 연구소'],
-    datasets: [
-      {
-        label: 'Cat',
-        data: catData,
-        backgroundColor: 'rgba(255, 242, 0, 0.2)',
-        borderColor: 'rgb(202, 188, 30)',
-        borderWidth: 1,
-      },
-      {
-        label: 'Dog',
-        data: dogData,
-        backgroundColor: 'rgba(255, 119, 0, 0.2)',
-        borderColor: 'rgb(195, 118, 36)',
-        borderWidth: 1,
-      },
-    ],
+    labels: labels,
+    datasets: databases,
   };
   const options = {
     responsive: true,
@@ -54,13 +46,16 @@ export default function Chart({ catData, dogData, title }: ChartProps) {
         position: 'top' as const,
         labels: {
           font: {
-            size: 16,
+            size: 14,
           },
         },
       },
       title: {
         display: true,
         text: title,
+        font: {
+          size: 17,
+        },
       },
     },
     animation: {
@@ -74,10 +69,27 @@ export default function Chart({ catData, dogData, title }: ChartProps) {
         return delay;
       },
     },
+    scales: {
+      x: {
+        ticks: {
+          font: {
+            size: 18, // x축 폰트 크기
+          },
+        },
+      },
+      y: {
+        ticks: {
+          font: {
+            size: 18, // y축 폰트 크기
+          },
+          stepSize: 1, // y축 단위를 1로 설정
+        },
+      },
+    },
   };
 
   return (
-    <div className='w-full h-[60vh] max-h-[500px]'>
+    <div className='w-full h-[45vh] max-h-[500px]'>
       <Bar data={data} options={options} />
     </div>
   );

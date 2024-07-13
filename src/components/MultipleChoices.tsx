@@ -1,72 +1,55 @@
 import React, { useState } from 'react';
 import { StepProps } from './SingleChoice';
-import { useRouter } from 'next/navigation';
 import { useStore } from '@/store';
 import ButtonForm from './ButtonForm';
 
-export default function MultipleChoices({ step, setStep }: StepProps) {
-  const router = useRouter();
-
-  const setTotal = useStore((state) => state.setTotal);
-  const registerData = useStore((state) => state.registerData);
-  const setRegisterData = useStore((state) => state.setRegisterData);
+export default function MultipleChoices({
+  step,
+  setStep,
+  survey,
+  sumTotal,
+}: StepProps) {
   const setToastState = useStore((state) => state.setToastState);
-
+  const selectedIndex = useStore((state) => state.selectedIndex);
+  const setSelectedIndex = useStore((state) => state.setSelectedIndex);
   const [selectedAnswer, setSelectedAnswer] = useState<number[]>(
-    registerData[step].index as number[]
+    selectedIndex[step].index as number[]
   );
 
   const handleNext = () => {
-    const totalScore = registerData.reduce((accumulator, currentValue) => {
-      return accumulator + (currentValue.score || 0);
-    }, 0);
-
     if (selectedAnswer.length === 2) {
-      setTotal(
-        totalScore +
-          registerData[step].answer![selectedAnswer[0]].value +
-          registerData[step].answer![selectedAnswer[1]].value
-      );
+      setStep(step + 1);
     } else {
       setToastState();
       return;
     }
-
-    router.push('/result');
   };
 
   const handleBack = () => {
-    const newRegisterData = registerData.map((item, i) => {
-      if (i === step && item.answer && selectedAnswer) {
-        return {
-          ...item,
-          index: selectedAnswer,
-        };
-      }
-      return item;
-    });
-
-    setRegisterData(newRegisterData);
     setStep(step - 1);
   };
 
   const handleAnswerClick = (index: number) => {
     if (selectedAnswer.includes(index)) {
       setSelectedAnswer(selectedAnswer.filter((item) => item !== index));
+      setSelectedIndex(
+        selectedAnswer.filter((item) => item !== index),
+        step
+      );
     } else if (selectedAnswer.length < 2) {
       setSelectedAnswer([...selectedAnswer, index]);
+      setSelectedIndex([...selectedAnswer, index], step);
     } else {
       setSelectedAnswer([selectedAnswer[0], index]);
+      setSelectedIndex([selectedAnswer[0], index], step);
     }
   };
   return (
     <div className='mt-28 w-full'>
-      <div className='mb-10 text-xl font-semibold'>
-        {registerData[step].question}
-      </div>
-      {registerData[step].answer && (
+      <div className='mb-10 text-xl font-semibold'>{survey[step].question}</div>
+      {survey[step].answer && (
         <ul className='mb-8'>
-          {registerData[step].answer.map((ans, index) => (
+          {survey[step].answer.map((ans, index) => (
             <li
               key={index}
               onClick={() => handleAnswerClick(index)}
@@ -81,11 +64,7 @@ export default function MultipleChoices({ step, setStep }: StepProps) {
           ))}
         </ul>
       )}
-      <ButtonForm
-        nextText='완료'
-        handleBack={handleBack}
-        handleNext={handleNext}
-      />
+      <ButtonForm handleBack={handleBack} handleNext={handleNext} />
     </div>
   );
 }

@@ -1,7 +1,7 @@
 'use client';
 import { useStore } from '@/store';
 import { useRouter } from 'next/navigation';
-import { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import Button from './Button';
 
 interface StartFormProps {
@@ -22,6 +22,7 @@ const StartForm = () => {
 
   const setTeam = useStore((state) => state.setTeam);
   const setNickname = useStore((state) => state.setNickname);
+  const resetAllData = useStore((state) => state.resetAllData);
 
   const router = useRouter();
 
@@ -54,6 +55,10 @@ const StartForm = () => {
       setError({ team: false, nickname: false });
     }, 1000);
   };
+
+  useEffect(() => {
+    resetAllData();
+  }, []);
   return (
     <form onSubmit={handleSubmit} className='text-center mx-8'>
       <div className='flex flex-col my-10 gap-2 items-center '>
