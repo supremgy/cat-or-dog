@@ -1,74 +1,56 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import ProgressBar from './ProgressBar';
 import SingleChoice from './SingleChoice';
 import RatingQuestion from './RatingQuestion';
 import MultipleChoices from './MultipleChoices';
 import { useStore } from '@/store';
-import { Answer } from '@/store/SurveyStore';
 import AlertModal from './AlertModal';
 import Toast from './Toast';
+import { Survey } from '@/app/survey/page';
 
-interface StepState {
-  question: string;
-  answer?: Answer[] | undefined;
+export interface SurveyProps {
+  survey: Survey[];
 }
 
-interface Props {
-  survey: {
-    openness: StepState;
-    neuroticism: StepState;
-    extroversion: StepState;
-    agreeableness: StepState;
-  };
-}
-export default function SurveyForm({ survey }: Props) {
+export default function SurveyForm({ survey }: SurveyProps) {
   const modalState = useStore((state) => state.modalState);
-  const setRegisterData = useStore((state) => state.setRegisterData);
-  const registerData = useStore((state) => state.registerData);
   const toastState = useStore((state) => state.toastState);
-  useEffect(() => {
-    const newRegisterData = [
-      {
-        ...registerData[0],
-        question: survey.openness.question,
-        answer: survey.openness.answer,
-      },
-      {
-        ...registerData[1],
-        question: survey.neuroticism.question,
-        answer: survey.neuroticism.answer,
-      },
-      {
-        ...registerData[2],
-        question: survey.extroversion.question,
-      },
-      {
-        ...registerData[3],
-        question: survey.agreeableness.question,
-        answer: survey.agreeableness.answer,
-      },
-    ];
-
-    // 상태가 다를 경우에만 업데이트
-    if (JSON.stringify(registerData) !== JSON.stringify(newRegisterData)) {
-      setRegisterData(newRegisterData);
-    }
-  }, [setRegisterData, registerData, survey]);
-
-  const [step, setStep] = useState(0);
+  const sumTotal = useStore((state) => state.setTotal);
+  const step = useStore((state) => state.currentStep);
+  const setStep = useStore((state) => state.setCurrentStep);
 
   return (
     <>
-      <div className='relative'>
-        <ProgressBar step={step} />
+      <ProgressBar step={step} />
+      <div className='relative mb-4'>
         <div>
           {toastState && <Toast />}
-          {step === 0 && <SingleChoice step={step} setStep={setStep} />}
-          {step === 1 && <SingleChoice step={step} setStep={setStep} />}
-          {step === 2 && <RatingQuestion step={step} setStep={setStep} />}
-          {step === 3 && <MultipleChoices step={step} setStep={setStep} />}
+          {(step === 0 || step === 1) && (
+            <SingleChoice
+              step={step}
+              setStep={setStep}
+              survey={survey}
+              sumTotal={sumTotal}
+            />
+          )}
+          {step === 2 && (
+            <MultipleChoices
+              step={step}
+              setStep={setStep}
+              survey={survey}
+              sumTotal={sumTotal}
+            />
+          )}
+          {step === 3 && (
+            <RatingQuestion
+              step={step}
+              setStep={setStep}
+              survey={survey}
+              sumTotal={sumTotal}
+            />
+          )}
         </div>
       </div>
       {modalState && <AlertModal />}
