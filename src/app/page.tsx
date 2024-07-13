@@ -1,4 +1,3 @@
-import Header from '@/components/Header';
 import StartForm from '@/components/StartForm';
 import Image from 'next/image';
 import InfoGrab from '../../public/infograb.svg';
@@ -14,7 +13,6 @@ export default function Home() {
           <span className='font-bold'>이길영</span>입니다!
           <br />
           <div className='flex'>
-            <span className='mr-2'>제가</span>
             <span className='flex  items-center'>
               <Image src={InfoGrab} alt='InfoGrab' height={16} />
             </span>
