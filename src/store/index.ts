@@ -1,21 +1,30 @@
 import { create } from 'zustand';
-import { createUserSlice, UserState } from './UserStore';
+import { createUserSlice, UserStoreState } from './UserStore';
 import { createJSONStorage, persist } from 'zustand/middleware';
-import { createSurveySlice, SurveyState } from './SurveyStore';
+import {
+  createSelectedIndexSlice,
+  SelectedIndexStoreState,
+} from './SurveyStore';
 
-type AppState = UserState &
-  SurveyState & {
+type AppState = UserStoreState &
+  SelectedIndexStoreState & {
     modalState: boolean;
     setModalState: (modalState: boolean) => void;
+
     toastState: boolean;
     setToastState: () => void;
+
+    currentStep: number;
+    setCurrentStep: (step: number) => void;
+
+    resetAllData: () => void;
   };
 
 export const useStore = create<AppState>()(
   persist(
     (set, get, api) => ({
       ...createUserSlice(set, get, api),
-      ...createSurveySlice(set, get, api),
+      ...createSelectedIndexSlice(set, get, api),
       modalState: false,
       setModalState: (modalState: boolean) => set({ modalState }),
       toastState: false,
@@ -25,6 +34,21 @@ export const useStore = create<AppState>()(
           set({ toastState: false });
         }, 2000);
       },
+      currentStep: 0,
+      setCurrentStep: (step: number) => set({ currentStep: step }),
+      resetAllData: () => {
+        // 로컬 스토리지 초기화
+        localStorage.clear();
+        // 상태 초기화
+        set((state) => ({
+          ...state,
+          ...createUserSlice(set, get, api),
+          ...createSelectedIndexSlice(set, get, api),
+          modalState: false,
+          toastState: false,
+          currentStep: 0,
+        }));
+      },
     }),
     {
       name: 'app-storage',
@@ -32,7 +56,8 @@ export const useStore = create<AppState>()(
         team: state.team,
         nickname: state.nickname,
         total: state.total,
-        registerData: state.registerData,
+        selectedIndex: state.selectedIndex,
+        currentStep: state.currentStep,
       }),
       storage: createJSONStorage(() => localStorage),
     }
