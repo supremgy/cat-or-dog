@@ -4,7 +4,7 @@ import { createJSONStorage, persist } from 'zustand/middleware';
 import {
   createSelectedIndexSlice,
   SelectedIndexStoreState,
-} from './SurveyStore';
+} from './AnswerStore';
 
 type AppState = UserStoreState &
   SelectedIndexStoreState & {
