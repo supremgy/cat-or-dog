@@ -1,3 +1,4 @@
+import { createToastSlice, ToastStoreState } from './ToastStore';
 import { create } from 'zustand';
 import { createUserSlice, UserStoreState } from './UserStore';
 import { createJSONStorage, persist } from 'zustand/middleware';
@@ -7,12 +8,10 @@ import {
 } from './AnswerStore';
 
 type AppState = UserStoreState &
-  SelectedIndexStoreState & {
+  SelectedIndexStoreState &
+  ToastStoreState & {
     modalState: boolean;
     setModalState: (modalState: boolean) => void;
-
-    toastState: boolean;
-    setToastState: () => void;
 
     currentStep: number;
     setCurrentStep: (step: number) => void;
@@ -25,17 +24,14 @@ export const useStore = create<AppState>()(
     (set, get, api) => ({
       ...createUserSlice(set, get, api),
       ...createSelectedIndexSlice(set, get, api),
+      ...createToastSlice(set, get, api),
+
       modalState: false,
       setModalState: (modalState: boolean) => set({ modalState }),
-      toastState: false,
-      setToastState: () => {
-        set({ toastState: true });
-        setTimeout(() => {
-          set({ toastState: false });
-        }, 2000);
-      },
+
       currentStep: 0,
       setCurrentStep: (step: number) => set({ currentStep: step }),
+
       resetAllData: () => {
         // 로컬 스토리지 초기화
         localStorage.clear();
