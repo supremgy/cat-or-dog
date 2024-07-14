@@ -1,5 +1,5 @@
-import { Member } from '../dashboard/page';
-import { ResultType } from '../result/page';
+import { Member } from '@/model/member';
+import { ResultType } from '../app/result/page';
 
 const description = (total: number, result: ResultType) => {
   if (total >= 20) {
@@ -11,7 +11,9 @@ const description = (total: number, result: ResultType) => {
   }
 };
 
-const calculateTotalData = (teamResult: Member[]) => {
+const calculateTotalData = (
+  teamResult: Pick<Member, 'nickname' | 'score'>[]
+) => {
   const totalData = [0, 0, 0];
 
   teamResult.forEach((member) => {

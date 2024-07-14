@@ -7,17 +7,25 @@ import Button from './Button';
 interface StartFormProps {
   team: string;
   nickname: string;
+  password?: string;
 }
 interface StartErrorProps {
   team: boolean;
   nickname: boolean;
+  password?: boolean;
 }
 
 const StartForm = () => {
-  const [form, setForm] = useState<StartFormProps>({ team: '', nickname: '' });
+  const [buttonText, setButtonText] = useState('시작하기');
+  const [form, setForm] = useState<StartFormProps>({
+    team: '',
+    nickname: '',
+    password: '',
+  });
   const [error, setError] = useState<StartErrorProps>({
     team: false,
     nickname: false,
+    password: false,
   });
 
   const setTeam = useStore((state) => state.setTeam);
@@ -45,20 +53,40 @@ const StartForm = () => {
       setError((prev) => ({ ...prev, nickname: false }));
     }
 
+    if (form.team === 'ADMIN') {
+      if (!form.password) {
+        setError((prev) => ({ ...prev, password: true }));
+
+        hasError = true;
+      } else {
+        setError((prev) => ({ ...prev, password: false }));
+      }
+    }
+
     if (!hasError) {
       setTeam(form.team);
       setNickname(form.nickname);
+      if (form.team === 'ADMIN') {
+        //admin 로그인 로직
+        router.push('/dashboard');
+        return;
+      }
       router.push('/survey');
     }
 
     setTimeout(() => {
-      setError({ team: false, nickname: false });
+      setError({ team: false, nickname: false, password: false });
     }, 1000);
   };
 
   useEffect(() => {
     resetAllData();
   }, []);
+  useEffect(() => {
+    form.team === 'ADMIN'
+      ? setButtonText('대시보드로 이동')
+      : setButtonText('시작하기');
+  }, [form.team]);
   return (
     <form onSubmit={handleSubmit} className='text-center mx-8 mb-4'>
       <div className='flex flex-col my-10 gap-2 items-center '>
@@ -82,6 +110,7 @@ const StartForm = () => {
           <option value='Product'>Product Team</option>
           <option value='Success'>Success Team</option>
           <option value='기업 부설 연구소'>기업 부설 연구소</option>
+          <option value='ADMIN'>Admin</option>
         </select>
 
         <input
@@ -94,12 +123,32 @@ const StartForm = () => {
             }))
           }
           placeholder='닉네임을 입력하세요'
-          className={`input-theme text-teal-600 ${
+          className={`z-20 input-theme text-teal-600 ${
             error.nickname && 'animate-shake border-2 border-red-600'
           }`}
         />
+
+        <input
+          type='password'
+          onChange={(event) =>
+            setForm((prev) => ({
+              ...prev,
+              password: event.target.value,
+            }))
+          }
+          placeholder='비밀번호를 입력하세요'
+          className={`input-theme text-teal-600 duration-200 z-10 ${
+            form.team == 'ADMIN' ? ' translate-y-0' : ' -translate-y-12'
+          } ${error.password && 'animate-shake border-2 border-red-600'}  `}
+        />
       </div>
-      <Button type='submit' text='시작하기' className='w-full h-12 text-xl' />
+      <Button
+        type='submit'
+        text={buttonText}
+        className={`w-full h-12 text-xl duration-200 ${
+          form.team !== 'ADMIN' && '-translate-y-12'
+        }`}
+      />
     </form>
   );
 };

@@ -35,6 +35,10 @@ const config: Config = {
           '100%': { opacity: '0' },
         },
       },
+      screens: {
+        xs: { max: '480px' },
+        xxs: { max: '400px' },
+      },
     },
   },
 

@@ -23,37 +23,30 @@ export default function ResultPage() {
     {
       nickname: 'Levi',
       score: 29,
-      opinion: 'excellent',
     },
     {
       nickname: 'Noah',
       score: 18,
-      opinion: 'normal',
     },
     {
       nickname: 'Jeff',
       score: 9,
-      opinion: 'consideration',
     },
     {
       nickname: 'Jeff',
       score: 9,
-      opinion: 'consideration',
     },
     {
       nickname: 'Jeff',
       score: 9,
-      opinion: 'consideration',
     },
     {
       nickname: 'Jeff',
       score: 9,
-      opinion: 'consideration',
     },
     {
       nickname: 'Jeff',
       score: 9,
-      opinion: 'consideration',
     },
   ];
   return (
