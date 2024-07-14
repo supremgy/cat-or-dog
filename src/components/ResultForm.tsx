@@ -1,6 +1,6 @@
 'use client';
 import { useStore } from '@/store';
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import React from 'react';
 import Button from './Button';
 import { ResultType } from '@/app/result/page';
@@ -16,10 +16,11 @@ interface ResultProps {
 export default function ResultForm({ result, teamResult }: ResultProps) {
   const router = useRouter();
 
+  const nickname = useStore((state) => state.nickname);
   const team = useStore((state) => state.team);
   const total = useStore((state) => state.total);
-  const nickname = useStore((state) => state.nickname);
 
+  if (!total) redirect('/');
   const totalData = calculateTotalData(teamResult);
 
   const handleGoHome = () => {
