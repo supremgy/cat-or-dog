@@ -1,5 +1,5 @@
-import { Member } from '../dashboard/page';
-import { ResultType } from '../result/page';
+import { Member } from '@/model/member';
+import { ResultType } from '../app/result/page';
 
 const description = (total: number, result: ResultType) => {
   if (total >= 20) {
