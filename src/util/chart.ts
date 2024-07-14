@@ -1,14 +1,5 @@
 import { Member } from '@/model/member';
 
-const getRandomRGBA = () => {
-  const r = Math.floor(Math.random() * 256); // Red 값 (0-255)
-  const g = Math.floor(Math.random() * 256); // Green 값 (0-255)
-  const b = Math.floor(Math.random() * 256); // Blue 값 (0-255)
-  const a = Math.random().toFixed(2); // Alpha 값 (0.00-1.00)
-
-  return `rgba(${r}, ${g}, ${b}, 0.2)`;
-};
-
 const getTeamCountsByScoreRange = (
   members: Member[]
 ): { high: number[]; medium: number[]; low: number[] } => {
@@ -76,7 +67,6 @@ const getTeamScoreStandardDeviations = (members: Member[]): number[] => {
 };
 
 export {
-  getRandomRGBA,
   getTeamCountsByScoreRange,
   getTeamAverageScores,
   getTeamScoreStandardDeviations,
