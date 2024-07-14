@@ -19,17 +19,15 @@ export default function ResultForm({ result, teamResult }: ResultProps) {
   const team = useStore((state) => state.team);
   const total = useStore((state) => state.total);
   const nickname = useStore((state) => state.nickname);
-  const resetAllData = useStore((state) => state.resetAllData);
 
   const totalData = calculateTotalData(teamResult);
 
   const handleGoHome = () => {
-    resetAllData();
     router.push('/');
   };
 
   return (
-    <div className='mt-14'>
+    <div className='mt-14 mb-4'>
       <div className='text-center mb-6'>
         <div className='mb-4 text-lg'>
           <b>{nickname}님</b>께서 생각하시는 <b>이길영</b> 지원자는?
