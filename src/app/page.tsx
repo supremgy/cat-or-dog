@@ -3,7 +3,7 @@ import Image from 'next/image';
 import InfoGrab from '../../public/infograb.svg';
 export default function Home() {
   return (
-    <div className='main-theme h-dvh'>
+    <div className='main-theme h-dvh overflow-y-auto'>
       <section className='flex flex-col items-center mt-36 gap-10'>
         <Image src={InfoGrab} alt='InfoGrab' height={45} />
         <div className='text-xl text-center'>

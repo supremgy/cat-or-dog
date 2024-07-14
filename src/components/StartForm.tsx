@@ -60,7 +60,7 @@ const StartForm = () => {
     resetAllData();
   }, []);
   return (
-    <form onSubmit={handleSubmit} className='text-center mx-8'>
+    <form onSubmit={handleSubmit} className='text-center mx-8 mb-4'>
       <div className='flex flex-col my-10 gap-2 items-center '>
         <select
           id='team'

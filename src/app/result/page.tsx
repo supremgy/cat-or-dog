@@ -57,7 +57,7 @@ export default function ResultPage() {
     },
   ];
   return (
-    <div className='main-theme h-dvh'>
+    <div className='main-theme h-dvh overflow-y-auto'>
       <Header />
       <ResultForm result={result} teamResult={teamResult} />
     </div>
