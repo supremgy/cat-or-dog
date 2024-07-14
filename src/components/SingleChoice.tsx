@@ -13,7 +13,7 @@ export interface StepProps {
 
 export default function SingleChoice({ step, setStep, survey }: StepProps) {
   const setModalState = useStore((state) => state.setModalState);
-  const setToastState = useStore((state) => state.setToastState);
+  const onToast = useStore((state) => state.onToast);
   const selectedIndex = useStore((state) => state.selectedIndex);
   const setSelectedIndex = useStore((state) => state.setSelectedIndex);
   const [selectedAnswer, setSelectedAnswer] = useState<number | undefined>(
@@ -32,7 +32,7 @@ export default function SingleChoice({ step, setStep, survey }: StepProps) {
     if (typeof selectedAnswer === 'number') {
       setStep(step + 1);
     } else {
-      setToastState();
+      onToast();
       return;
     }
   };

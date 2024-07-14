@@ -12,7 +12,7 @@ export default function RatingQuestion({
   sumTotal,
 }: StepProps) {
   const router = useRouter();
-  const setToastState = useStore((state) => state.setToastState);
+  const onToast = useStore((state) => state.onToast);
   const selectedIndex = useStore((state) => state.selectedIndex);
 
   const [score, setScore] = useState<number | undefined>(undefined);
@@ -44,7 +44,7 @@ export default function RatingQuestion({
 
       router.push('/result');
     } else {
-      setToastState();
+      onToast();
       return;
     }
   };
