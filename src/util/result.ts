@@ -11,7 +11,9 @@ const description = (total: number, result: ResultType) => {
   }
 };
 
-const calculateTotalData = (teamResult: Member[]) => {
+const calculateTotalData = (
+  teamResult: Pick<Member, 'nickname' | 'score'>[]
+) => {
   const totalData = [0, 0, 0];
 
   teamResult.forEach((member) => {

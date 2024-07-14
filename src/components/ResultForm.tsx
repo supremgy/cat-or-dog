@@ -10,7 +10,7 @@ import { calculateTotalData, description } from '@/util/result';
 
 interface ResultProps {
   result: ResultType;
-  teamResult: Member[];
+  teamResult: Pick<Member, 'nickname' | 'score'>[];
 }
 
 export default function ResultForm({ result, teamResult }: ResultProps) {
