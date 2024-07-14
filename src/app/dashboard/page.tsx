@@ -1,5 +1,4 @@
 import Chart from '@/components/Chart';
-import Header from '@/components/Header';
 import React from 'react';
 export interface Member {
   nickname: string;
@@ -85,13 +84,10 @@ export default function DashBoardPage() {
   };
 
   return (
-    <div className='main-theme h-fit'>
-      <Header />
-      <section className='flex flex-col gap-10'>
-        <Chart title='팀별 총합 차트' labels={[]} databases={[]} />
-        <Chart title='팀별 평균 차트' labels={[]} databases={[]} />
-        <Chart title='팀별 표준편차 차트' labels={[]} databases={[]} />
-      </section>
-    </div>
+    <section className='flex flex-col gap-10'>
+      <Chart title='팀별 총합 차트' labels={[]} databases={[]} />
+      <Chart title='팀별 평균 차트' labels={[]} databases={[]} />
+      <Chart title='팀별 표준편차 차트' labels={[]} databases={[]} />
+    </section>
   );
 }
