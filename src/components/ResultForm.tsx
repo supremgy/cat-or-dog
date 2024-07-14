@@ -5,8 +5,8 @@ import React from 'react';
 import Button from './Button';
 import { ResultType } from '@/app/result/page';
 import Chart from './Chart';
-import { Member } from '@/app/dashboard/page';
-import { calculateTotalData, description } from '@/app/util/result';
+import { Member } from '@/model/member';
+import { calculateTotalData, description } from '@/util/result';
 
 interface ResultProps {
   result: ResultType;
