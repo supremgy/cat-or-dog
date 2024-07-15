@@ -8,7 +8,6 @@ import {
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 import { authOptions } from '../api/auth/authOptions';
-import { headers } from 'next/headers';
 import { Member } from '@/model/member';
 import { fetchAllMembers } from '@/service/member';
 
