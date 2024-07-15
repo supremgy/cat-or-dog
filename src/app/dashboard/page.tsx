@@ -10,6 +10,7 @@ import { Team } from '@/model/team';
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 import { authOptions } from '../api/auth/authOptions';
+import { members } from './[team]/page';
 export default async function DashBoardPage() {
   const session = await getServerSession(authOptions);
   const user = session?.user;
@@ -26,26 +27,6 @@ export default async function DashBoardPage() {
   //   '#FF9F40', // Orange
   //   '#FF6384', // Red
   // ];
-  const members: Member[] = [
-    { id: 1, nickname: 'Alice', team_id: 1, score: 25 },
-    { id: 2, nickname: 'Bob', team_id: 1, score: 18 },
-    { id: 3, nickname: 'Charlie', team_id: 1, score: 9 },
-    { id: 4, nickname: 'David', team_id: 1, score: 27 },
-    { id: 5, nickname: 'Eve', team_id: 1, score: 12 },
-    { id: 6, nickname: 'Frank', team_id: 2, score: 22 },
-    { id: 7, nickname: 'Grace', team_id: 2, score: 19 },
-    { id: 8, nickname: 'Hannah', team_id: 2, score: 15 },
-    { id: 9, nickname: 'Ivan', team_id: 2, score: 8 },
-    { id: 10, nickname: 'Jack', team_id: 3, score: 23 },
-    { id: 11, nickname: 'Karen', team_id: 3, score: 17 },
-    { id: 12, nickname: 'Leo', team_id: 3, score: 14 },
-    { id: 13, nickname: 'Mia', team_id: 3, score: 9 },
-    { id: 14, nickname: 'Nina', team_id: 4, score: 26 },
-    { id: 15, nickname: 'Oscar', team_id: 4, score: 21 },
-    { id: 16, nickname: 'Paul', team_id: 4, score: 10 },
-    { id: 17, nickname: 'Quinn', team_id: 4, score: 7 },
-    { id: 18, nickname: 'Ruth', team_id: 4, score: 5 },
-  ];
 
   const teams: Team[] = [
     { id: 1, name: 'product' },
