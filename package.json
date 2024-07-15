@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@sanity/client": "^6.21.0",
     "chart.js": "^4.4.3",
     "next": "14.2.4",
     "react": "^18",
