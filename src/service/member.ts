@@ -59,12 +59,12 @@ export async function updateMember(member: Member) {
   }
 }
 
-export async function fetchMembersByTeam(team: string) {
+export async function fetchMembersByTeam(team: string): Promise<Member[]> {
   try {
     const members = await client.fetch(
       `
        *[_type == "member" && team->name == $team]{
-        team,
+        "team": team->name,
         nickname,
         score
       }
@@ -98,15 +98,13 @@ export async function fetchAllMembers(): Promise<Member[]> {
 }
 
 export async function getMembersByTeam(team: string) {
-  // const host = headers().get('host');
-  // const protocal = process?.env.NODE_ENV === 'development' ? 'http' : 'https';
-
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_PATH}/api/member/${team}`,
     {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        'Cache-Control': 'no-store', // 추가된 부분
       },
       cache: 'no-store',
     }
@@ -120,14 +118,13 @@ export async function getMembersByTeam(team: string) {
 }
 
 export async function getAllMembers() {
-  // const host = headers().get('host');
-  // const protocal = process?.env.NODE_ENV === 'development' ? 'http' : 'https';
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_PATH}/api/member`,
     {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        'Cache-Control': 'no-store', // 추가된 부분
       },
       cache: 'no-store',
     }

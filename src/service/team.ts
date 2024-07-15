@@ -16,9 +16,6 @@ export async function fetchTeams() {
 }
 
 export async function getTeams() {
-  // const host = headers().get('host');
-  // const protocal = process?.env.NODE_ENV === 'development' ? 'http' : 'https';
-
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_PATH}/api/team`,
     {

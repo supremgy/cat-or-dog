@@ -7,6 +7,7 @@ import { ResultType } from '@/app/result/page';
 import Chart from './Chart';
 import { Member } from '@/model/member';
 import { calculateTotalData, description } from '@/util/result';
+import { fetchMembersByTeam } from '@/service/member';
 interface ResultProps {
   result: ResultType;
 }
@@ -20,25 +21,34 @@ export default function ResultForm({ result }: ResultProps) {
   const [members, setMembers] = useState<Member[]>([]);
 
   useEffect(() => {
-    const fetchMembers = async () => {
-      try {
-        const response = await fetch(`/api/member/${team}`, {
-          cache: 'no-store',
-        });
-        if (!response.ok) {
-          throw new Error('Failed to fetch members');
-        }
-        const data: Member[] = await response.json();
-        setMembers(data);
-      } catch (error) {
-        console.error('Error fetching members:', error);
-      }
-    };
+    fetch(`/api/member/${team}`, {
+      cache: 'no-store',
+    })
+      .then((res) => res.json())
+      .then((data) => setMembers(data));
 
-    if (team) {
-      fetchMembers();
-    }
-  }, [team]);
+    // const fetchMembers = async () => {
+    //   try {
+    //     const response = await fetch(`/api/member/${team}`, {
+    //       cache: 'no-store',
+    //     });
+    //     const members: Member[] = await fetchMembersByTeam(team);
+    //     // if (!response.ok) {
+    //     //   throw new Error('Failed to fetch members');
+    //     // }
+    //     // const data: Member[] = await response.json();
+    //     // console.log('data : ', data);
+
+    //     setMembers(members);
+    //   } catch (error) {
+    //     console.error('Error fetching members:', error);
+    //   }
+    // };
+
+    // if (team) {
+    //   fetchMembers();
+    // }
+  }, []);
 
   if (!total) redirect('/');
   const totalData = calculateTotalData(members);
