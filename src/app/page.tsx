@@ -1,7 +1,31 @@
 import StartForm from '@/components/StartForm';
 import Image from 'next/image';
 import InfoGrab from '../../public/infograb.svg';
-export default function Home() {
+import { Team } from '@/model/team';
+import { headers } from 'next/headers';
+
+async function fetchTeams() {
+  const host = headers().get('host');
+  const protocal = process?.env.NODE_ENV === 'development' ? 'http' : 'https';
+
+  const response = await fetch(`${protocal}://${host}/api/team`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch teams');
+  }
+
+  return await response.json();
+}
+
+export default async function Home() {
+  const teamData: Team[] = await fetchTeams();
+  const teams = teamData.map((team) => team.name);
+
   return (
     <div className='main-theme h-dvh overflow-y-auto'>
       <section className='flex flex-col items-center mt-36 gap-10'>
@@ -21,7 +45,7 @@ export default function Home() {
           <p>설문조사를 통해 알아보세요!</p>
         </div>
       </section>
-      <StartForm />
+      <StartForm teams={teams} />
     </div>
   );
 }
