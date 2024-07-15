@@ -5,40 +5,23 @@ import {
   getTeamCountsByScoreRange,
   getTeamScoreStandardDeviations,
 } from '../../util/chart';
-import { Member } from '@/model/member';
 import { Team } from '@/model/team';
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 import { authOptions } from '../api/auth/authOptions';
 import { members } from './[team]/page';
+import { fetchTeams } from '@/service/team';
 export default async function DashBoardPage() {
   const session = await getServerSession(authOptions);
   const user = session?.user;
   if (!user) redirect('/');
-  // const infograbTeamBgColor = [
-  //   '#9966FF33', // Purple (HEX with alpha)
-  //   '#36A2EB33', // Blue (HEX with alpha)
-  //   '#FF9F4033', // Orange (HEX with alpha)
-  //   '#FF638433', // Red (HEX with alpha)
-  // ];
-  // const infograbBorderColor = [
-  //   '#9966FF', // Purple
-  //   '#36A2EB', // Blue
-  //   '#FF9F40', // Orange
-  //   '#FF6384', // Red
-  // ];
 
-  const teams: Team[] = [
-    { id: 1, name: 'product' },
-    { id: 2, name: 'devops' },
-    { id: 3, name: 'success' },
-    { id: 4, name: 'laboratory' },
-  ];
-  const labels = teams.map((team) => team.name);
+  const teams: Team[] = await fetchTeams();
+  const labels = teams
+    .filter((team) => team.name !== 'Admin')
+    .map((team) => team.name);
 
   //직원수
-
-  const label = ['강추! 😆', '추천 😁', '고려 🤔'];
 
   const teamCountsByScoreRange = getTeamCountsByScoreRange(members);
   const teamAverageScores = getTeamAverageScores(members);
