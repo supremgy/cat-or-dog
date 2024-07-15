@@ -2,17 +2,18 @@ import StartForm from '@/components/StartForm';
 import Image from 'next/image';
 import InfoGrab from '../../public/infograb.svg';
 import { Team } from '@/model/team';
+import { headers } from 'next/headers';
 
 async function fetchTeams() {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/team`,
-    {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }
-  );
+  const host = headers().get('host');
+  const protocal = process?.env.NODE_ENV === 'development' ? 'http' : 'https';
+
+  const response = await fetch(`${protocal}://${host}/api/team`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
 
   if (!response.ok) {
     throw new Error('Failed to fetch teams');
