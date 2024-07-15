@@ -1,5 +1,6 @@
 import { Member } from '@/model/member';
 import { client } from './sanity';
+import { headers } from 'next/headers';
 
 export async function updateMember(member: Member) {
   try {
@@ -94,4 +95,46 @@ export async function fetchAllMembers(): Promise<Member[]> {
     console.error('Error fetching members', error);
     throw new Error('Failed to fetch members');
   }
+}
+
+export async function getMembersByTeam(team: string) {
+  // const host = headers().get('host');
+  // const protocal = process?.env.NODE_ENV === 'development' ? 'http' : 'https';
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_PATH}/api/member/${team}`,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      cache: 'no-store',
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch members');
+  }
+
+  return await response.json();
+}
+
+export async function getAllMembers() {
+  // const host = headers().get('host');
+  // const protocal = process?.env.NODE_ENV === 'development' ? 'http' : 'https';
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_PATH}/api/member`,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      cache: 'no-store',
+    }
+  );
+  if (!response.ok) {
+    throw new Error('Failed to fetch members');
+  }
+
+  return await response.json();
 }
