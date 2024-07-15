@@ -4,6 +4,7 @@ import Image from 'next/image';
 import InfoGrab from '../../public/infograb.svg';
 import { useStore } from '@/store';
 import { usePathname, useRouter } from 'next/navigation';
+import { signOut } from 'next-auth/react';
 
 export default function Header() {
   const pathname = usePathname();
@@ -11,7 +12,13 @@ export default function Header() {
   const setModalState = useStore((state) => state.setModalState);
 
   const handleClick = () => {
-    pathname === '/survey' ? setModalState(true) : router.push('/');
+    if (pathname === '/survey') {
+      setModalState(true);
+      return;
+    } else if (pathname === '/dashboard') {
+      signOut();
+    }
+    router.push('/');
   };
   return (
     <header className='w-full h-10 flex justify-center mt-4'>

@@ -1,12 +1,17 @@
+import { authOptions } from '@/app/api/auth/authOptions';
 import Chart from '@/components/Chart';
-import Header from '@/components/Header';
-import NavBar from '@/components/NavBar';
 import { Member } from '@/model/member';
+import { getServerSession } from 'next-auth';
+import { redirect } from 'next/navigation';
 import React from 'react';
 interface Props {
   params: { team: string };
 }
-export default function TeamDashboardPage({ params: { team } }: Props) {
+export default async function TeamDashboardPage({ params: { team } }: Props) {
+  const session = await getServerSession(authOptions);
+  const user = session?.user;
+  if (!user) redirect('/');
+
   const members: Member[] = [
     { id: 1, nickname: 'Alice', team_id: 1, score: 25 },
     { id: 2, nickname: 'Bob', team_id: 1, score: 18 },
