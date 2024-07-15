@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { FormEvent, useEffect, useState } from 'react';
 import Button from './Button';
 import { signIn } from 'next-auth/react';
+import { Team } from '@/model/team';
 
 interface StartFormProps {
   team: string;
@@ -16,7 +17,11 @@ interface StartErrorProps {
   password?: boolean;
 }
 
-const StartForm = () => {
+interface Props {
+  teams: string[];
+}
+
+const StartForm = ({ teams }: Props) => {
   const [buttonText, setButtonText] = useState('시작하기');
   const [form, setForm] = useState<StartFormProps>({
     team: '',
@@ -75,8 +80,6 @@ const StartForm = () => {
           password: form.password,
         });
 
-        console.log('response : ', response);
-
         if (response?.ok) {
           router.push('/dashboard');
           return;
@@ -125,11 +128,12 @@ const StartForm = () => {
           <option value='' disabled>
             팀을 선택하세요
           </option>
-          <option value='Product'>Product Team</option>
-          <option value='Success'>Success Team</option>
-          <option value='DevOps'>DevOps Team</option>
-          <option value='Laboratory'>기업 부설 연구소</option>
-          <option value='Admin'>Admin</option>
+          {teams &&
+            teams.map((team, _) => (
+              <option key={_} value={team}>
+                {team !== 'Laboratory' ? `${team} Team` : '기업 부설 연구소'}
+              </option>
+            ))}
         </select>
 
         <input
