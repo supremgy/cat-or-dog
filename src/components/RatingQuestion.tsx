@@ -14,10 +14,12 @@ export default function RatingQuestion({
   const router = useRouter();
   const onToast = useStore((state) => state.onToast);
   const selectedIndex = useStore((state) => state.selectedIndex);
+  const nickname = useStore((state) => state.nickname);
+  const team = useStore((state) => state.team);
 
   const [score, setScore] = useState<number | undefined>(undefined);
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (score && score > 10) {
       alert('점수가 너무 높아요!');
       return;
@@ -42,7 +44,21 @@ export default function RatingQuestion({
 
       sumTotal(total + score);
 
-      router.push('/result');
+      const response = await fetch('/api/member', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          nickname,
+          team,
+          score: total + score,
+        }),
+      });
+      if (response.ok) {
+        console.log('res : ', response);
+        router.push('/result');
+      }
     } else {
       onToast();
       return;

@@ -9,17 +9,17 @@ const getTeamCountsByScoreRange = (
     low: [], // 10점 미만
   };
 
-  const teamIds = Array.from(new Set(members.map((m) => m.team_id)));
+  const teamList = Array.from(new Set(members.map((m) => m.team)));
 
-  teamIds.forEach((teamId) => {
+  teamList.forEach((team) => {
     const highCount = members.filter(
-      (m) => m.team_id === teamId && m.score >= 20
+      (m) => m.team === team && m.score >= 20
     ).length;
     const mediumCount = members.filter(
-      (m) => m.team_id === teamId && m.score >= 10 && m.score < 20
+      (m) => m.team === team && m.score >= 10 && m.score < 20
     ).length;
     const lowCount = members.filter(
-      (m) => m.team_id === teamId && m.score < 10
+      (m) => m.team === team && m.score < 10
     ).length;
 
     scoreMap.high.push(highCount);
@@ -31,11 +31,11 @@ const getTeamCountsByScoreRange = (
 };
 
 const getTeamAverageScores = (members: Member[]): number[] => {
-  const teamIds = Array.from(new Set(members.map((m) => m.team_id)));
+  const teamList = Array.from(new Set(members.map((m) => m.team)));
   const averages: number[] = [];
 
-  teamIds.forEach((teamId) => {
-    const teamMembers = members.filter((m) => m.team_id === teamId);
+  teamList.forEach((teamId) => {
+    const teamMembers = members.filter((m) => m.team === teamId);
     const averageScore =
       teamMembers.reduce((sum, member) => sum + member.score, 0) /
       teamMembers.length;
@@ -46,11 +46,11 @@ const getTeamAverageScores = (members: Member[]): number[] => {
 };
 
 const getTeamScoreStandardDeviations = (members: Member[]): number[] => {
-  const teamIds = Array.from(new Set(members.map((m) => m.team_id)));
+  const teamList = Array.from(new Set(members.map((m) => m.team)));
   const SDData: number[] = [];
 
-  teamIds.forEach((teamId) => {
-    const teamMembers = members.filter((m) => m.team_id === teamId);
+  teamList.forEach((teamId) => {
+    const teamMembers = members.filter((m) => m.team === teamId);
     const averageScore =
       teamMembers.reduce((sum, member) => sum + member.score, 0) /
       teamMembers.length;

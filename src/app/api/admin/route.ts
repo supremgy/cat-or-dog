@@ -5,9 +5,9 @@ export async function POST(req: NextRequest) {
   try {
     const { team, nickname, password } = await req.json();
 
-    const loginResult = await adminLogin({ team, nickname, password });
+    const result = await adminLogin({ team, nickname, password });
 
-    if (loginResult) {
+    if (result) {
       return NextResponse.json({ success: true });
     } else {
       return NextResponse.json(

@@ -1,6 +1,5 @@
 export type Member = {
-  id: number;
   nickname: string;
-  team_id: number;
+  team: string;
   score: number;
 };
