@@ -4,7 +4,7 @@ import InfoGrab from '../../public/infograb.svg';
 import { Team } from '@/model/team';
 
 async function fetchTeams() {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/team`, {
+  const response = await fetch(`${process.env.NEXTAUTH_URL}/api/team`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
