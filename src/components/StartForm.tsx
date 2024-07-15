@@ -54,7 +54,7 @@ const StartForm = () => {
       setError((prev) => ({ ...prev, nickname: false }));
     }
 
-    if (form.team === 'admin') {
+    if (form.team === 'Admin') {
       if (!form.password) {
         setError((prev) => ({ ...prev, password: true }));
 
@@ -67,7 +67,7 @@ const StartForm = () => {
     if (!hasError) {
       setTeam(form.team);
       setNickname(form.nickname);
-      if (form.team === 'admin') {
+      if (form.team === 'Admin') {
         const response = await signIn('admin-credential', {
           redirect: false,
           team: form.team,
@@ -101,7 +101,7 @@ const StartForm = () => {
   }, []);
 
   useEffect(() => {
-    form.team === 'admin'
+    form.team === 'Admin'
       ? setButtonText('대시보드로 이동')
       : setButtonText('시작하기');
   }, [form.team]);
@@ -125,11 +125,11 @@ const StartForm = () => {
           <option value='' disabled>
             팀을 선택하세요
           </option>
-          <option value='DevOps'>DevOps Team</option>
           <option value='Product'>Product Team</option>
           <option value='Success'>Success Team</option>
-          <option value='기업 부설 연구소'>기업 부설 연구소</option>
-          <option value='admin'>Admin</option>
+          <option value='DevOps'>DevOps Team</option>
+          <option value='Laboratory'>기업 부설 연구소</option>
+          <option value='Admin'>Admin</option>
         </select>
 
         <input
@@ -157,7 +157,7 @@ const StartForm = () => {
           }
           placeholder='비밀번호를 입력하세요'
           className={`input-theme text-teal-600 duration-200 z-10 ${
-            form.team == 'admin' ? ' translate-y-0' : ' -translate-y-12'
+            form.team == 'Admin' ? ' translate-y-0' : ' -translate-y-12'
           } ${error.password && 'animate-shake border-2 border-red-600'}  `}
         />
       </div>
@@ -165,7 +165,7 @@ const StartForm = () => {
         type='submit'
         text={buttonText}
         className={`w-full h-12 text-xl duration-200 ${
-          form.team !== 'admin' && '-translate-y-12'
+          form.team !== 'Admin' && '-translate-y-12'
         }`}
       />
     </form>
