@@ -8,8 +8,8 @@ import {
 import { Member } from '@/model/member';
 import { Team } from '@/model/team';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '../api/auth/[...nextauth]/route';
 import { redirect } from 'next/navigation';
+import { authOptions } from '../api/auth/authOptions';
 export default async function DashBoardPage() {
   const session = await getServerSession(authOptions);
   const user = session?.user;

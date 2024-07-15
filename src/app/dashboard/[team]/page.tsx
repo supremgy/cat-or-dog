@@ -1,4 +1,4 @@
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { authOptions } from '@/app/api/auth/authOptions';
 import Chart from '@/components/Chart';
 import { Member } from '@/model/member';
 import { getServerSession } from 'next-auth';
