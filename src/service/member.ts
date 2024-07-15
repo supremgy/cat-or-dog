@@ -57,3 +57,41 @@ export async function updateMember(member: Member) {
     throw new Error('Failed to add or update member');
   }
 }
+
+export async function fetchMembersByTeam(team: string) {
+  try {
+    const members = await client.fetch(
+      `
+       *[_type == "member" && team->name == $team]{
+        team,
+        nickname,
+        score
+      }
+      `,
+      { team }
+    );
+
+    return members;
+  } catch (error) {
+    console.error('Error fetching members', error);
+    throw new Error('Failed to fetch members');
+  }
+}
+
+export async function fetchAllMembers(): Promise<Member[]> {
+  try {
+    const members = await client.fetch(
+      `
+        *[_type == "member"] | order(team->name asc) {
+        "team": team->name,
+        nickname,
+        score
+      }
+      `
+    );
+    return members;
+  } catch (error) {
+    console.error('Error fetching members', error);
+    throw new Error('Failed to fetch members');
+  }
+}
