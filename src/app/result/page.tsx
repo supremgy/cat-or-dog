@@ -7,6 +7,7 @@ export type ResultType = {
   normal: { content: string };
   consideration: { content: string };
 };
+
 export default function ResultPage() {
   const result: ResultType = {
     excellent: {
@@ -19,40 +20,11 @@ export default function ResultPage() {
       content: '고려해볼만한 지원자입니다 🤔',
     },
   };
-  const teamResult = [
-    {
-      nickname: 'Levi',
-      score: 29,
-    },
-    {
-      nickname: 'Noah',
-      score: 18,
-    },
-    {
-      nickname: 'Jeff',
-      score: 9,
-    },
-    {
-      nickname: 'Jeff',
-      score: 9,
-    },
-    {
-      nickname: 'Jeff',
-      score: 9,
-    },
-    {
-      nickname: 'Jeff',
-      score: 9,
-    },
-    {
-      nickname: 'Jeff',
-      score: 9,
-    },
-  ];
+
   return (
     <div className='main-theme h-dvh overflow-y-auto'>
       <Header />
-      <ResultForm result={result} teamResult={teamResult} />
+      <ResultForm result={result} />
     </div>
   );
 }

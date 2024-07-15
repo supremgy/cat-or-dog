@@ -56,7 +56,6 @@ export default function RatingQuestion({
         }),
       });
       if (response.ok) {
-        console.log('res : ', response);
         router.push('/result');
       }
     } else {

@@ -16,7 +16,7 @@ export default function NavBar({ teams }: Props) {
 
       {teams &&
         teams.map((team, i) => (
-          <ActiveLink key={i} href={`/dashboard/${team.toLowerCase()}`}>
+          <ActiveLink key={i} href={`/dashboard/${team}`}>
             {team}
           </ActiveLink>
         ))}

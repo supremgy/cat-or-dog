@@ -5,23 +5,38 @@ import {
   getTeamCountsByScoreRange,
   getTeamScoreStandardDeviations,
 } from '../../util/chart';
-import { Team } from '@/model/team';
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 import { authOptions } from '../api/auth/authOptions';
-import { members } from './[team]/page';
-import { fetchTeams } from '@/service/team';
+import { headers } from 'next/headers';
+import { Member } from '@/model/member';
+
+async function fetchAllMembers() {
+  const host = headers().get('host');
+  const protocal = process?.env.NODE_ENV === 'development' ? 'http' : 'https';
+  const response = await fetch(`${protocal}://${host}/api/member`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    cache: 'no-store',
+  });
+  if (!response.ok) {
+    throw new Error('Failed to fetch members');
+  }
+
+  return await response.json();
+}
+
 export default async function DashBoardPage() {
   const session = await getServerSession(authOptions);
   const user = session?.user;
   if (!user) redirect('/');
 
-  const teams: Team[] = await fetchTeams();
-  const labels = teams
-    .filter((team) => team.name !== 'Admin')
-    .map((team) => team.name);
-
   //직원수
+  const members: Member[] = await fetchAllMembers();
+  const labels = Array.from(new Set(members.map((member) => member.team)));
+  console.log('members : ', members);
 
   const teamCountsByScoreRange = getTeamCountsByScoreRange(members);
   const teamAverageScores = getTeamAverageScores(members);
@@ -61,7 +76,7 @@ export default async function DashBoardPage() {
   ];
   const SDDatabases = [
     {
-      label: '표준 편차',
+      label: '표준편차 점수',
       data: teamScoreStandardDeviations,
       backgroundColor: 'rgba(255, 99, 132, 0.2)', // 빨간색 계열
       borderColor: 'rgba(255, 99, 132, 1)',
@@ -71,17 +86,17 @@ export default async function DashBoardPage() {
   return (
     <section className='flex flex-col gap-10 mb-8'>
       <Chart
-        title='팀별 결과 총합 차트'
+        title='팀별 의견별 인원 총합 차트'
         labels={labels}
         databases={totalDatabases}
       />
       <Chart
-        title='팀별 점수 평균 차트'
+        title='팀별 평균 점수 차트'
         labels={labels}
         databases={averageDatabases}
       />
       <Chart
-        title='팀별 점수 표준편차 차트'
+        title='팀별 표준편차 점수 차트'
         labels={labels}
         databases={SDDatabases}
       />
