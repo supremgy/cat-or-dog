@@ -10,23 +10,7 @@ import { redirect } from 'next/navigation';
 import { authOptions } from '../api/auth/authOptions';
 import { headers } from 'next/headers';
 import { Member } from '@/model/member';
-
-async function fetchAllMembers() {
-  const host = headers().get('host');
-  const protocal = process?.env.NODE_ENV === 'development' ? 'http' : 'https';
-  const response = await fetch(`${protocal}://${host}/api/member`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    cache: 'no-store',
-  });
-  if (!response.ok) {
-    throw new Error('Failed to fetch members');
-  }
-
-  return await response.json();
-}
+import { fetchAllMembers } from '@/service/member';
 
 export default async function DashBoardPage() {
   const session = await getServerSession(authOptions);
@@ -36,7 +20,6 @@ export default async function DashBoardPage() {
   //직원수
   const members: Member[] = await fetchAllMembers();
   const labels = Array.from(new Set(members.map((member) => member.team)));
-  console.log('members : ', members);
 
   const teamCountsByScoreRange = getTeamCountsByScoreRange(members);
   const teamAverageScores = getTeamAverageScores(members);

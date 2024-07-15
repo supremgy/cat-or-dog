@@ -22,7 +22,9 @@ export default function ResultForm({ result }: ResultProps) {
   useEffect(() => {
     const fetchMembers = async () => {
       try {
-        const response = await fetch(`/api/member/${team}`);
+        const response = await fetch(`/api/member/${team}`, {
+          cache: 'no-store',
+        });
         if (!response.ok) {
           throw new Error('Failed to fetch members');
         }

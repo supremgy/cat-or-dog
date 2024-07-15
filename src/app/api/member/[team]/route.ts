@@ -1,8 +1,6 @@
 import { fetchMembersByTeam } from '@/service/member';
 import { NextRequest, NextResponse } from 'next/server';
-type Context = {
-  params: { team: string };
-};
+
 export async function GET(
   req: NextRequest,
   { params }: { params: { team: string } }
