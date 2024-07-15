@@ -6,11 +6,9 @@ import React from 'react';
 export default function AlertModal() {
   const router = useRouter();
   const setModalState = useStore((state) => state.setModalState);
-  const resetAllData = useStore((state) => state.resetAllData);
 
   const handleGoHome = () => {
     setModalState(false);
-    resetAllData();
     router.push('/');
   };
   return (

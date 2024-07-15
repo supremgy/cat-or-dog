@@ -7,7 +7,13 @@ import {
 } from '../../util/chart';
 import { Member } from '@/model/member';
 import { Team } from '@/model/team';
-export default function DashBoardPage() {
+import { getServerSession } from 'next-auth';
+import { redirect } from 'next/navigation';
+import { authOptions } from '../api/auth/authOptions';
+export default async function DashBoardPage() {
+  const session = await getServerSession(authOptions);
+  const user = session?.user;
+  if (!user) redirect('/');
   // const infograbTeamBgColor = [
   //   '#9966FF33', // Purple (HEX with alpha)
   //   '#36A2EB33', // Blue (HEX with alpha)

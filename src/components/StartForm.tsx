@@ -3,6 +3,7 @@ import { useStore } from '@/store';
 import { useRouter } from 'next/navigation';
 import { FormEvent, useEffect, useState } from 'react';
 import Button from './Button';
+import { signIn } from 'next-auth/react';
 
 interface StartFormProps {
   team: string;
@@ -34,7 +35,7 @@ const StartForm = () => {
 
   const router = useRouter();
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     let hasError = false;
@@ -53,7 +54,7 @@ const StartForm = () => {
       setError((prev) => ({ ...prev, nickname: false }));
     }
 
-    if (form.team === 'ADMIN') {
+    if (form.team === 'admin') {
       if (!form.password) {
         setError((prev) => ({ ...prev, password: true }));
 
@@ -66,10 +67,26 @@ const StartForm = () => {
     if (!hasError) {
       setTeam(form.team);
       setNickname(form.nickname);
-      if (form.team === 'ADMIN') {
-        //admin 로그인 로직
-        router.push('/dashboard');
-        return;
+      if (form.team === 'admin') {
+        const response = await signIn('admin-credential', {
+          redirect: false,
+          team: form.team,
+          nickname: form.nickname,
+          password: form.password,
+        });
+
+        console.log('response : ', response);
+
+        if (response?.ok) {
+          router.push('/dashboard');
+          return;
+        } else {
+          setError((prev) => ({ ...prev, nickname: true, password: true }));
+          setTimeout(() => {
+            setError({ team: false, nickname: false, password: false });
+          }, 1000);
+          return;
+        }
       }
       router.push('/survey');
     }
@@ -82,11 +99,13 @@ const StartForm = () => {
   useEffect(() => {
     resetAllData();
   }, []);
+
   useEffect(() => {
-    form.team === 'ADMIN'
+    form.team === 'admin'
       ? setButtonText('대시보드로 이동')
       : setButtonText('시작하기');
   }, [form.team]);
+
   return (
     <form onSubmit={handleSubmit} className='text-center mx-8 mb-4'>
       <div className='flex flex-col my-10 gap-2 items-center '>
@@ -110,7 +129,7 @@ const StartForm = () => {
           <option value='Product'>Product Team</option>
           <option value='Success'>Success Team</option>
           <option value='기업 부설 연구소'>기업 부설 연구소</option>
-          <option value='ADMIN'>Admin</option>
+          <option value='admin'>Admin</option>
         </select>
 
         <input
@@ -138,7 +157,7 @@ const StartForm = () => {
           }
           placeholder='비밀번호를 입력하세요'
           className={`input-theme text-teal-600 duration-200 z-10 ${
-            form.team == 'ADMIN' ? ' translate-y-0' : ' -translate-y-12'
+            form.team == 'admin' ? ' translate-y-0' : ' -translate-y-12'
           } ${error.password && 'animate-shake border-2 border-red-600'}  `}
         />
       </div>
@@ -146,7 +165,7 @@ const StartForm = () => {
         type='submit'
         text={buttonText}
         className={`w-full h-12 text-xl duration-200 ${
-          form.team !== 'ADMIN' && '-translate-y-12'
+          form.team !== 'admin' && '-translate-y-12'
         }`}
       />
     </form>
