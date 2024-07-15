@@ -4,12 +4,15 @@ import InfoGrab from '../../public/infograb.svg';
 import { Team } from '@/model/team';
 
 async function fetchTeams() {
-  const response = await fetch(`${process.env.PUBLIC_API_URL}/api/team`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/team`,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }
+  );
 
   if (!response.ok) {
     throw new Error('Failed to fetch teams');
