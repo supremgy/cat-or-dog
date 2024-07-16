@@ -18,7 +18,7 @@
 
 [🏃🏻‍♂️ Run Locally](#️-run-locally)
 
-[🌍 Environment Variables](#-envirenment-variables)
+[🌍 Environment Variables](#-environment-variables)
 
    </br>
 
@@ -137,6 +137,7 @@ Sanity Studio 실행
 <br>
 
 # 🌍 Environment Variables
+
 ```plaintext
 SANITY_PROJECT_ID=your-sanity-project-id
 SANITY_DATASET=production
