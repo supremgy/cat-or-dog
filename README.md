@@ -6,13 +6,17 @@
 <br/>
 설문조사는 다음과 같이 구성되어 있습니다
 
-1. [🌟 Feature](#-feature)
+[🌟 Feature](#-feature)
    - [🏠 홈페이지](#-홈페이지)
    - [📝 설문조사 페이지](#-설문조사-페이지)
    - [📈 결과 페이지](#-결과-페이지)
    - [📊 대시보드 페이지](#-대시보드-페이지)
-2. [🛠️ Tech Skills](#️-tech-skills)
-3. [🏃🏻‍♂️ Run Locally](#️-run-locally)
+     
+[🧩 ERD](#-ERD)
+
+[🛠️ Tech Skills](#️-tech-skills)
+
+[🏃🏻‍♂️ Run Locally](#️-run-locally)
 
    </br>
 
@@ -56,6 +60,12 @@
   - 각 팀별로 팀원 표준편차 차트
   ### <b>각 팀별 탭</b>
   - 팀원별 총 점수 차트
+
+</br>
+
+# 🧩 ERD
+
+![스크린샷 2024-07-16 오후 3 02 51](https://github.com/user-attachments/assets/711b0bc2-5617-4815-8e35-bf03e57bbbe6)
 
 </br>
 
