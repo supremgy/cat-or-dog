@@ -1,54 +1,23 @@
 'use client';
 import { useStore } from '@/store';
 import { redirect, useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Button from './Button';
 import { ResultType } from '@/app/result/page';
 import Chart from './Chart';
 import { Member } from '@/model/member';
 import { calculateTotalData, description } from '@/util/result';
-import { fetchMembersByTeam } from '@/service/member';
 interface ResultProps {
   result: ResultType;
+  members: Member[];
 }
 
-export default function ResultForm({ result }: ResultProps) {
+export default function ResultForm({ result, members }: ResultProps) {
   const router = useRouter();
 
   const nickname = useStore((state) => state.nickname);
   const team = useStore((state) => state.team);
   const total = useStore((state) => state.total);
-  const [members, setMembers] = useState<Member[]>([]);
-
-  useEffect(() => {
-    fetch(`/api/member/${team}`, {
-      cache: 'no-store',
-    })
-      .then((res) => res.json())
-      .then((data) => setMembers(data));
-
-    // const fetchMembers = async () => {
-    //   try {
-    //     const response = await fetch(`/api/member/${team}`, {
-    //       cache: 'no-store',
-    //     });
-    //     const members: Member[] = await fetchMembersByTeam(team);
-    //     // if (!response.ok) {
-    //     //   throw new Error('Failed to fetch members');
-    //     // }
-    //     // const data: Member[] = await response.json();
-    //     // console.log('data : ', data);
-
-    //     setMembers(members);
-    //   } catch (error) {
-    //     console.error('Error fetching members:', error);
-    //   }
-    // };
-
-    // if (team) {
-    //   fetchMembers();
-    // }
-  }, []);
 
   if (!total) redirect('/');
   const totalData = calculateTotalData(members);

@@ -2,6 +2,9 @@ import Header from '@/components/Header';
 import SurveyForm from '@/components/SurveyForm';
 import React from 'react';
 
+export const metadata = {
+  title: 'Survey',
+};
 export interface Answer {
   content: string;
   value: number;
