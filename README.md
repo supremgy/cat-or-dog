@@ -18,6 +18,8 @@
 
 [🏃🏻‍♂️ Run Locally](#️-run-locally)
 
+[🌍 Environment Variables](#-envirenment-variables)
+
    </br>
 
 # 🌟 Feature
@@ -132,5 +134,14 @@ Sanity Studio 실행
   yarn dev
 ```
 
-이제 브라우저에서 `http://localhost:3000`을 열어 프로젝트를 확인할 수 있습니다.<br>
-Sanity 스튜디오는 `http://localhost:3333`에서 확인할 수 있습니다.
+<br>
+
+# 🌍 Environment Variables
+```plaintext
+SANITY_PROJECT_ID=your-sanity-project-id
+SANITY_DATASET=production
+SANITY_SECRET_TOKEN=your-sanity-secret-token
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=your-next-auth-secret
+NEXT_PUBLIC_BASE_PATH=http://localhost:3000
+```
