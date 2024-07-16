@@ -1,8 +1,12 @@
 import StartForm from '@/components/StartForm';
 import Image from 'next/image';
-import InfoGrab from '../../public/infograb.svg';
+import InfoGrab from '../../../public/infograb.svg';
 import { Team } from '@/model/team';
 import { getTeams } from '@/service/team';
+
+export const metadata = {
+  title: 'Home',
+};
 
 export default async function Home() {
   const teamData: Team[] = await getTeams();
