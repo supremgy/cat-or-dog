@@ -30,6 +30,10 @@
 
 - 사용자는 본인의 `team`을 선택하고 `nickname`을 입력하여 설문조사를 시작할 수 있습니다.
 - `Admin team`을 선택할 경우 `nickname`과 `password`를 입력하면 `/dashboard` 페이지로 이동할 수 있습니다.
+  - `admin` 정보
+    - `team`: Admin team 
+    - `nickname`: infograb
+    - `password`: hireme 
 
   <br/>
 
@@ -56,6 +60,7 @@
 
 - `next-auth`를 활용하여 `admin`로그인 시 `session`을 만들고 session 정보가 없을때 홈으로 `redirect`가 됩니다.
 - 대시보드는 InfoGrab 전 팀원 차트에 대한 Tab과 각 팀별 Tab으로 구성되어 있습니다.
+
   ### <b>InfoGrab Tab</b>
   - 각 팀별로 의견 분포도에 따른 인원수 총합 차트
   - 각 팀별로 팀원 평균점수 차트
