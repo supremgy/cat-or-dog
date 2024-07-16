@@ -11,6 +11,10 @@ import { authOptions } from '../api/auth/authOptions';
 import { Member } from '@/model/member';
 import { fetchAllMembers } from '@/service/member';
 
+export const metadata = {
+  title: 'Dashboard',
+};
+
 export default async function DashBoardPage() {
   const session = await getServerSession(authOptions);
   const user = session?.user;

@@ -56,7 +56,7 @@ export default function RatingQuestion({
         }),
       });
       if (response.ok) {
-        router.push('/result');
+        router.push(`/result?team=${team}`);
       }
     } else {
       onToast();

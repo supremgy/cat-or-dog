@@ -5,8 +5,14 @@ import { fetchMembersByTeam } from '@/service/member';
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 import React from 'react';
+
 interface Props {
   params: { team: string };
+}
+export async function generateMetadata({ params: { team } }: Props) {
+  return {
+    title: `${team} Dashboard`,
+  };
 }
 
 export default async function TeamDashboardPage({ params: { team } }: Props) {

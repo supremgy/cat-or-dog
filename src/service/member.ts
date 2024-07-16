@@ -104,7 +104,7 @@ export async function getMembersByTeam(team: string) {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'Cache-Control': 'no-store', // 추가된 부분
+        'Cache-Control': 'no-store',
       },
       cache: 'no-store',
     }
@@ -124,7 +124,7 @@ export async function getAllMembers() {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'Cache-Control': 'no-store', // 추가된 부분
+        'Cache-Control': 'no-store',
       },
       cache: 'no-store',
     }
