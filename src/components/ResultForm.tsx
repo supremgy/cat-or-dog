@@ -5,21 +5,23 @@ import React from 'react';
 import Button from './Button';
 import { ResultType } from '@/app/result/page';
 import Chart from './Chart';
-import { Member } from '@/model/member';
 import { calculateTotalData, description } from '@/util/result';
+import { useMember } from '@/hook/useMember';
 interface ResultProps {
   result: ResultType;
-  members: Member[];
 }
 
-export default function ResultForm({ result, members }: ResultProps) {
+export default function ResultForm({ result }: ResultProps) {
   const router = useRouter();
+
+  const { members } = useMember();
 
   const nickname = useStore((state) => state.nickname);
   const team = useStore((state) => state.team);
   const total = useStore((state) => state.total);
 
   if (!total) redirect('/');
+
   const totalData = calculateTotalData(members);
 
   const handleGoHome = () => {
