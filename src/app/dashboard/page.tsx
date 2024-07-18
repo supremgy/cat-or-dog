@@ -9,7 +9,7 @@ import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 import { authOptions } from '../api/auth/authOptions';
 import { Member } from '@/model/member';
-import { fetchAllMembers } from '@/service/member';
+import { getAllMembers } from '@/util/member';
 
 export const metadata = {
   title: 'Dashboard',
@@ -21,7 +21,7 @@ export default async function DashBoardPage() {
   if (!user) redirect('/');
 
   //직원수
-  const members: Member[] = await fetchAllMembers();
+  const members: Member[] = await getAllMembers();
   const labels = Array.from(new Set(members.map((member) => member.team)));
 
   const teamCountsByScoreRange = getTeamCountsByScoreRange(members);
