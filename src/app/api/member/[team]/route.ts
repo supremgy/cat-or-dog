@@ -1,6 +1,8 @@
 import { fetchMembersByTeam } from '@/service/member';
 import { NextRequest, NextResponse } from 'next/server';
 
+export const fetchCache = 'force-no-store';
+
 export async function GET(
   req: NextRequest,
   { params }: { params: { team: string } }
