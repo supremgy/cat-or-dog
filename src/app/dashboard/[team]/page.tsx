@@ -1,7 +1,7 @@
 import { authOptions } from '@/app/api/auth/authOptions';
 import Chart from '@/components/Chart';
 import { Member } from '@/model/member';
-import { fetchMembersByTeam } from '@/service/member';
+import { getMembersByTeam } from '@/util/member';
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 import React from 'react';
@@ -19,7 +19,7 @@ export default async function TeamDashboardPage({ params: { team } }: Props) {
   const session = await getServerSession(authOptions);
   const user = session?.user;
   if (!user) redirect('/');
-  const teamResult: Member[] = await fetchMembersByTeam(team);
+  const teamResult: Member[] = await getMembersByTeam(team);
 
   const teamName = teamResult.map((member) => member.nickname);
   const teamScore = teamResult.map((member) => member.score);
