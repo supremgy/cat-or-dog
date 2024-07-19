@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { FormEvent, useEffect, useState } from 'react';
 import Button from './Button';
 import { signIn } from 'next-auth/react';
-import { Team } from '@/model/team';
+import Loader from './Loader';
 
 interface StartFormProps {
   team: string;
@@ -37,7 +37,7 @@ const StartForm = ({ teams }: Props) => {
   const setTeam = useStore((state) => state.setTeam);
   const setNickname = useStore((state) => state.setNickname);
   const resetAllData = useStore((state) => state.resetAllData);
-
+  const isLoading = useStore((state) => state.isLoading);
   const router = useRouter();
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -165,13 +165,19 @@ const StartForm = ({ teams }: Props) => {
           } ${error.password && 'animate-shake border-2 border-red-600'}  `}
         />
       </div>
-      <Button
-        type='submit'
-        text={buttonText}
-        className={`w-full h-12 text-xl duration-200 ${
+      <div
+        className={`relative duration-200 ${
           form.team !== 'Admin' && '-translate-y-12'
         }`}
-      />
+      >
+        {isLoading && <Loader />}
+        <Button
+          disabled={isLoading}
+          type='submit'
+          text={buttonText}
+          className={`w-full h-12 text-xl ${isLoading && 'opacity-80'}`}
+        />
+      </div>
     </form>
   );
 };
