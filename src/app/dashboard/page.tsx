@@ -1,5 +1,5 @@
 import Chart from '@/components/Chart';
-import React from 'react';
+import React, { Suspense } from 'react';
 import {
   getTeamAverageScores,
   getTeamCountsByScoreRange,
@@ -10,6 +10,7 @@ import { redirect } from 'next/navigation';
 import { authOptions } from '../api/auth/authOptions';
 import { Member } from '@/model/member';
 import { getAllMembers } from '@/util/member';
+import GridSpinner from '@/components/GridSpinner';
 
 export const metadata = {
   title: 'Dashboard',
@@ -70,22 +71,30 @@ export default async function DashBoardPage() {
     },
   ];
   return (
-    <section className='flex flex-col gap-10 mb-8'>
-      <Chart
-        title='팀별 의견별 인원 총합 차트'
-        labels={labels}
-        databases={totalDatabases}
-      />
-      <Chart
-        title='팀별 평균 점수 차트'
-        labels={labels}
-        databases={averageDatabases}
-      />
-      <Chart
-        title='팀별 표준편차 점수 차트'
-        labels={labels}
-        databases={SDDatabases}
-      />
-    </section>
+    <Suspense
+      fallback={
+        <div className='h-dvh flex items-start pt-32 justify-center'>
+          <GridSpinner />
+        </div>
+      }
+    >
+      <section className='flex flex-col gap-10 mb-8'>
+        <Chart
+          title='팀별 의견별 인원 총합 차트'
+          labels={labels}
+          databases={totalDatabases}
+        />
+        <Chart
+          title='팀별 평균 점수 차트'
+          labels={labels}
+          databases={averageDatabases}
+        />
+        <Chart
+          title='팀별 표준편차 점수 차트'
+          labels={labels}
+          databases={SDDatabases}
+        />
+      </section>
+    </Suspense>
   );
 }
