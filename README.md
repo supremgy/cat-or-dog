@@ -85,6 +85,8 @@
 &nbsp;
 <img src="https://img.shields.io/badge/Tailwindcss-282C34?logo=tailwindcss&logoColor=23007ACC" alt="Tailwindcss logo" title="Tailwindcss" height="25" />
 &nbsp;
+<img src="https://img.shields.io/badge/React%20Query-282C34?logo=react%20query&logoColor=23007ACC" alt="React%20query logo" title="React%20query" height="25" />
+&nbsp;
 <img src="https://img.shields.io/badge/Zustand-282C34.svg?logo=" alt="Zustand logo" title="Zustand" height="25" />
 &nbsp;
 <img src="https://img.shields.io/badge/ChartJS-282C34?logo=chartJS&logoColor=23007ACC" alt="ChartJS logo" title="ChartJS" height="25" />
