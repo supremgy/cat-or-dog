@@ -17,6 +17,9 @@ type AppState = UserStoreState &
     setCurrentStep: (step: number) => void;
 
     resetAllData: () => void;
+
+    isLoading: boolean;
+    setIsLoading: (state: boolean) => void;
   };
 
 export const useStore = create<AppState>()(
@@ -45,6 +48,9 @@ export const useStore = create<AppState>()(
           currentStep: 0,
         }));
       },
+
+      isLoading: false,
+      setIsLoading: (state: boolean) => set({ isLoading: state }),
     }),
     {
       name: 'app-storage',
@@ -54,6 +60,7 @@ export const useStore = create<AppState>()(
         total: state.total,
         selectedIndex: state.selectedIndex,
         currentStep: state.currentStep,
+        isLoading: state.isLoading,
       }),
       storage: createJSONStorage(() => localStorage),
     }

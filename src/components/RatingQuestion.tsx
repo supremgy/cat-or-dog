@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useStore } from '@/store';
 import { StepProps } from './SingleChoice';
 import ButtonForm from './ButtonForm';
-import { useRouter } from 'next/navigation';
+import { useMember } from '@/hook/useMember';
 
 export default function RatingQuestion({
   step,
@@ -11,14 +11,13 @@ export default function RatingQuestion({
   survey,
   sumTotal,
 }: StepProps) {
-  const router = useRouter();
   const onToast = useStore((state) => state.onToast);
   const selectedIndex = useStore((state) => state.selectedIndex);
   const nickname = useStore((state) => state.nickname);
   const team = useStore((state) => state.team);
 
   const [score, setScore] = useState<number | undefined>(undefined);
-
+  const { uploadMember } = useMember();
   const handleNext = async () => {
     if (score && score > 10) {
       alert('점수가 너무 높아요!');
@@ -43,21 +42,11 @@ export default function RatingQuestion({
       });
 
       sumTotal(total + score);
-
-      const response = await fetch('/api/member', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          nickname,
-          team,
-          score: total + score,
-        }),
+      uploadMember.mutate({
+        nickname,
+        team,
+        score: total + score,
       });
-      if (response.ok) {
-        router.push(`/result?team=${team}`);
-      }
     } else {
       onToast();
       return;

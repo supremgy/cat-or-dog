@@ -1,10 +1,11 @@
 import { authOptions } from '@/app/api/auth/authOptions';
 import Chart from '@/components/Chart';
+import GridSpinner from '@/components/GridSpinner';
 import { Member } from '@/model/member';
 import { getMembersByTeam } from '@/util/member';
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
-import React from 'react';
+import React, { Suspense } from 'react';
 
 interface Props {
   params: { team: string };
@@ -34,12 +35,20 @@ export default async function TeamDashboardPage({ params: { team } }: Props) {
     },
   ];
   return (
-    <section className='h-dvh'>
-      <Chart
-        title='팀원별 총 점수 차트'
-        labels={teamName}
-        databases={databases}
-      />
-    </section>
+    <Suspense
+      fallback={
+        <div>
+          <GridSpinner />
+        </div>
+      }
+    >
+      <section className='h-dvh'>
+        <Chart
+          title='팀원별 총 점수 차트'
+          labels={teamName}
+          databases={databases}
+        />
+      </section>
+    </Suspense>
   );
 }
