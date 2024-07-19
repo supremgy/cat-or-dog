@@ -12,7 +12,7 @@ export type ResultType = {
   consideration: { content: string };
 };
 
-export default async function ResultPage() {
+export default function ResultPage() {
   const result: ResultType = {
     excellent: {
       content: '매우 적합한 지원자입니다! 😆',

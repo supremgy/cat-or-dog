@@ -1,3 +1,5 @@
+import { Member } from '@/model/member';
+
 async function getMembersByTeam(team: string) {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_PATH}/api/member/${team}`,
@@ -33,4 +35,14 @@ async function getAllMembers() {
   return await response.json();
 }
 
-export { getMembersByTeam, getAllMembers };
+async function uploadMember(params: Member) {
+  await fetch('/api/member', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(params),
+  });
+}
+
+export { getMembersByTeam, getAllMembers, uploadMember };

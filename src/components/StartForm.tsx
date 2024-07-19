@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { FormEvent, useEffect, useState } from 'react';
 import Button from './Button';
 import { signIn } from 'next-auth/react';
-import { Team } from '@/model/team';
+import Loader from './Loader';
 
 interface StartFormProps {
   team: string;
@@ -37,7 +37,8 @@ const StartForm = ({ teams }: Props) => {
   const setTeam = useStore((state) => state.setTeam);
   const setNickname = useStore((state) => state.setNickname);
   const resetAllData = useStore((state) => state.resetAllData);
-
+  const isLoading = useStore((state) => state.isLoading);
+  const setIsLoading = useStore((state) => state.setIsLoading);
   const router = useRouter();
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -73,6 +74,7 @@ const StartForm = ({ teams }: Props) => {
       setTeam(form.team);
       setNickname(form.nickname);
       if (form.team === 'Admin') {
+        setIsLoading(true);
         const response = await signIn('admin-credential', {
           redirect: false,
           team: form.team,
@@ -82,12 +84,14 @@ const StartForm = ({ teams }: Props) => {
 
         if (response?.ok) {
           router.push('/dashboard');
+          setIsLoading(false);
           return;
         } else {
           setError((prev) => ({ ...prev, nickname: true, password: true }));
           setTimeout(() => {
             setError({ team: false, nickname: false, password: false });
           }, 1000);
+          setIsLoading(false);
           return;
         }
       }
@@ -165,13 +169,19 @@ const StartForm = ({ teams }: Props) => {
           } ${error.password && 'animate-shake border-2 border-red-600'}  `}
         />
       </div>
-      <Button
-        type='submit'
-        text={buttonText}
-        className={`w-full h-12 text-xl duration-200 ${
+      <div
+        className={`relative duration-200 ${
           form.team !== 'Admin' && '-translate-y-12'
         }`}
-      />
+      >
+        {isLoading && <Loader />}
+        <Button
+          disabled={isLoading}
+          type='submit'
+          text={buttonText}
+          className={`w-full h-12 text-xl ${isLoading && 'opacity-80'}`}
+        />
+      </div>
     </form>
   );
 };
