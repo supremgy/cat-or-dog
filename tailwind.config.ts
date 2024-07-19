@@ -49,7 +49,7 @@ const config: Config = {
           '@apply bg-teal-200/60 flex flex-col w-full px-8': '',
         },
         '.input-theme': {
-          '@apply w-full h-10 p-2 font-medium rounded-md outline-none focus:border-2 focus:border-teal-600 duration-150':
+          '@apply w-full h-10 p-2 font-medium rounded-md outline-none focus:border-2 focus:border-teal-600 duration-150 bg-white':
             '',
         },
         '.button-theme': {
