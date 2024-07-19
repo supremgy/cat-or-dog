@@ -5,5 +5,9 @@ type Props = {
   color?: string;
 };
 export default function GridSpinner({ color = 'green' }: Props) {
-  return <GridLoader color={color} size={30} />;
+  return (
+    <div className='h-dvh flex items-start pt-32 justify-center'>
+      <GridLoader color={color} size={30} />
+    </div>
+  );
 }

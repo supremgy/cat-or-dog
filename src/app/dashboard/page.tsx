@@ -71,13 +71,7 @@ export default async function DashBoardPage() {
     },
   ];
   return (
-    <Suspense
-      fallback={
-        <div className='h-dvh flex items-start pt-32 justify-center'>
-          <GridSpinner />
-        </div>
-      }
-    >
+    <Suspense fallback={<GridSpinner />}>
       <section className='flex flex-col gap-10 mb-8'>
         <Chart
           title='팀별 의견별 인원 총합 차트'
