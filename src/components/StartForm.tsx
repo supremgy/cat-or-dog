@@ -38,6 +38,7 @@ const StartForm = ({ teams }: Props) => {
   const setNickname = useStore((state) => state.setNickname);
   const resetAllData = useStore((state) => state.resetAllData);
   const isLoading = useStore((state) => state.isLoading);
+  const setIsLoading = useStore((state) => state.setIsLoading);
   const router = useRouter();
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -73,6 +74,7 @@ const StartForm = ({ teams }: Props) => {
       setTeam(form.team);
       setNickname(form.nickname);
       if (form.team === 'Admin') {
+        setIsLoading(true);
         const response = await signIn('admin-credential', {
           redirect: false,
           team: form.team,
@@ -82,12 +84,14 @@ const StartForm = ({ teams }: Props) => {
 
         if (response?.ok) {
           router.push('/dashboard');
+          setIsLoading(false);
           return;
         } else {
           setError((prev) => ({ ...prev, nickname: true, password: true }));
           setTimeout(() => {
             setError({ team: false, nickname: false, password: false });
           }, 1000);
+          setIsLoading(false);
           return;
         }
       }
