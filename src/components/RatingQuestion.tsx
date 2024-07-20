@@ -5,17 +5,14 @@ import { StepProps } from './SingleChoice';
 import ButtonForm from './ButtonForm';
 import { useMember } from '@/hook/useMember';
 
-export default function RatingQuestion({
-  step,
-  setStep,
-  survey,
-  sumTotal,
-}: StepProps) {
+export default function RatingQuestion({ survey }: StepProps) {
   const onToast = useStore((state) => state.onToast);
   const selectedIndex = useStore((state) => state.selectedIndex);
   const nickname = useStore((state) => state.nickname);
   const team = useStore((state) => state.team);
-
+  const step = useStore((state) => state.currentStep);
+  const setStep = useStore((state) => state.setCurrentStep);
+  const sumTotal = useStore((state) => state.setTotal);
   const [score, setScore] = useState<number | undefined>(undefined);
   const { uploadMember } = useMember();
   const handleNext = async () => {

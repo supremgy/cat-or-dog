@@ -5,17 +5,16 @@ import Link from 'next/link';
 import { Survey } from '@/app/survey/page';
 
 export interface StepProps {
-  step: number;
   survey: Survey[];
-  setStep: (step: number) => void;
-  sumTotal: (score: number) => void;
 }
 
-export default function SingleChoice({ step, setStep, survey }: StepProps) {
+export default function SingleChoice({ survey }: StepProps) {
   const setModalState = useStore((state) => state.setModalState);
   const onToast = useStore((state) => state.onToast);
   const selectedIndex = useStore((state) => state.selectedIndex);
   const setSelectedIndex = useStore((state) => state.setSelectedIndex);
+  const step = useStore((state) => state.currentStep);
+  const setStep = useStore((state) => state.setCurrentStep);
   const [selectedAnswer, setSelectedAnswer] = useState<number | undefined>(
     selectedIndex[step].index as number
   );

@@ -84,7 +84,6 @@ const StartForm = ({ teams }: Props) => {
 
         if (response?.ok) {
           router.push('/dashboard');
-          setIsLoading(false);
           return;
         } else {
           setError((prev) => ({ ...prev, nickname: true, password: true }));

@@ -46,6 +46,7 @@ export const useStore = create<AppState>()(
           modalState: false,
           toastState: false,
           currentStep: 0,
+          isLoading: false,
         }));
       },
 

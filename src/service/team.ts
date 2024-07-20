@@ -1,4 +1,3 @@
-import { headers } from 'next/headers';
 import { client } from './sanity';
 
 export async function fetchTeams() {
@@ -23,7 +22,6 @@ export async function getTeams() {
       headers: {
         'Content-Type': 'application/json',
       },
-      cache: 'no-store',
     }
   );
 

@@ -8,6 +8,7 @@ async function getMembersByTeam(team: string) {
       headers: {
         'Content-Type': 'application/json',
       },
+      cache: 'no-store',
     }
   );
 
@@ -26,6 +27,7 @@ async function getAllMembers() {
       headers: {
         'Content-Type': 'application/json',
       },
+      cache: 'no-store',
     }
   );
   if (!response.ok) {
