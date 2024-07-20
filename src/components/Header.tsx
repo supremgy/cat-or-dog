@@ -10,12 +10,11 @@ export default function Header() {
   const pathname = usePathname();
   const router = useRouter();
   const setModalState = useStore((state) => state.setModalState);
-
   const handleClick = () => {
     if (pathname === '/survey') {
       setModalState(true);
       return;
-    } else if (pathname === '/dashboard') {
+    } else if (pathname.startsWith('/dashboard')) {
       signOut();
     }
     router.push('/');
