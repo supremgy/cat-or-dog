@@ -3,10 +3,13 @@ import { StepProps } from './SingleChoice';
 import { useStore } from '@/store';
 import ButtonForm from './ButtonForm';
 
-export default function MultipleChoices({ step, setStep, survey }: StepProps) {
+export default function MultipleChoices({ survey }: StepProps) {
   const onToast = useStore((state) => state.onToast);
   const selectedIndex = useStore((state) => state.selectedIndex);
   const setSelectedIndex = useStore((state) => state.setSelectedIndex);
+
+  const step = useStore((state) => state.currentStep);
+  const setStep = useStore((state) => state.setCurrentStep);
   const [selectedAnswer, setSelectedAnswer] = useState<number[]>(
     selectedIndex[step].index as number[]
   );

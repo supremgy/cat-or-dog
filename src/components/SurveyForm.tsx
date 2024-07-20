@@ -20,9 +20,7 @@ export default function SurveyForm({ survey }: SurveyProps) {
   !nickname && redirect('/');
   const modalState = useStore((state) => state.modalState);
   const toastState = useStore((state) => state.toastState);
-  const sumTotal = useStore((state) => state.setTotal);
   const step = useStore((state) => state.currentStep);
-  const setStep = useStore((state) => state.setCurrentStep);
 
   return (
     <>
@@ -30,30 +28,9 @@ export default function SurveyForm({ survey }: SurveyProps) {
       <div className='relative mb-4'>
         <div>
           {toastState && <Toast />}
-          {(step === 0 || step === 1) && (
-            <SingleChoice
-              step={step}
-              setStep={setStep}
-              survey={survey}
-              sumTotal={sumTotal}
-            />
-          )}
-          {step === 2 && (
-            <MultipleChoices
-              step={step}
-              setStep={setStep}
-              survey={survey}
-              sumTotal={sumTotal}
-            />
-          )}
-          {step === 3 && (
-            <RatingQuestion
-              step={step}
-              setStep={setStep}
-              survey={survey}
-              sumTotal={sumTotal}
-            />
-          )}
+          {(step === 0 || step === 1) && <SingleChoice survey={survey} />}
+          {step === 2 && <MultipleChoices survey={survey} />}
+          {step === 3 && <RatingQuestion survey={survey} />}
         </div>
       </div>
       {modalState && <AlertModal />}
