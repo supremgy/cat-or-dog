@@ -1,10 +1,7 @@
-import { authOptions } from '@/app/api/auth/authOptions';
 import Chart from '@/components/Chart';
 import GridSpinner from '@/components/GridSpinner';
 import { Member } from '@/model/member';
 import { getMembersByTeam } from '@/util/member';
-import { getServerSession } from 'next-auth';
-import { redirect } from 'next/navigation';
 import React, { Suspense } from 'react';
 
 interface Props {
@@ -17,9 +14,6 @@ export async function generateMetadata({ params: { team } }: Props) {
 }
 
 export default async function TeamDashboardPage({ params: { team } }: Props) {
-  const session = await getServerSession(authOptions);
-  const user = session?.user;
-  if (!user) redirect('/');
   const teamResult: Member[] = await getMembersByTeam(team);
 
   const teamName = teamResult.map((member) => member.nickname);
@@ -35,20 +29,12 @@ export default async function TeamDashboardPage({ params: { team } }: Props) {
     },
   ];
   return (
-    <Suspense
-      fallback={
-        <div>
-          <GridSpinner />
-        </div>
-      }
-    >
-      <section className='h-dvh'>
-        <Chart
-          title='팀원별 총 점수 차트'
-          labels={teamName}
-          databases={databases}
-        />
-      </section>
-    </Suspense>
+    <section className='h-dvh'>
+      <Chart
+        title='팀원별 총 점수 차트'
+        labels={teamName}
+        databases={databases}
+      />
+    </section>
   );
 }

@@ -5,9 +5,6 @@ import {
   getTeamCountsByScoreRange,
   getTeamScoreStandardDeviations,
 } from '../../util/chart';
-import { getServerSession } from 'next-auth';
-import { redirect } from 'next/navigation';
-import { authOptions } from '../api/auth/authOptions';
 import { Member } from '@/model/member';
 import { getAllMembers } from '@/util/member';
 import GridSpinner from '@/components/GridSpinner';
@@ -17,10 +14,6 @@ export const metadata = {
 };
 
 export default async function DashBoardPage() {
-  const session = await getServerSession(authOptions);
-  const user = session?.user;
-  if (!user) redirect('/');
-
   //직원수
   const members: Member[] = await getAllMembers();
   const labels = Array.from(new Set(members.map((member) => member.team)));
@@ -71,24 +64,22 @@ export default async function DashBoardPage() {
     },
   ];
   return (
-    <Suspense fallback={<GridSpinner />}>
-      <section className='flex flex-col gap-10 mb-8'>
-        <Chart
-          title='팀별 의견별 인원 총합 차트'
-          labels={labels}
-          databases={totalDatabases}
-        />
-        <Chart
-          title='팀별 평균 점수 차트'
-          labels={labels}
-          databases={averageDatabases}
-        />
-        <Chart
-          title='팀별 표준편차 점수 차트'
-          labels={labels}
-          databases={SDDatabases}
-        />
-      </section>
-    </Suspense>
+    <section className='flex flex-col gap-10 mb-8'>
+      <Chart
+        title='팀별 의견별 인원 총합 차트'
+        labels={labels}
+        databases={totalDatabases}
+      />
+      <Chart
+        title='팀별 평균 점수 차트'
+        labels={labels}
+        databases={averageDatabases}
+      />
+      <Chart
+        title='팀별 표준편차 점수 차트'
+        labels={labels}
+        databases={SDDatabases}
+      />
+    </section>
   );
 }
