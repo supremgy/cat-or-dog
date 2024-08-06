@@ -1,9 +1,11 @@
 import { Member } from '@/model/member';
-
-const getTeamCountsByScoreRange = (
-  members: Member[]
-): { high: number[]; medium: number[]; low: number[] } => {
-  const scoreMap: { high: number[]; medium: number[]; low: number[] } = {
+interface ScoreMapProps {
+  high: number[];
+  medium: number[];
+  low: number[];
+}
+const getTeamCountsByScoreRange = (members: Member[]): ScoreMapProps => {
+  const scoreMap: ScoreMapProps = {
     high: [], // 20점 이상
     medium: [], // 10점 이상 20점 미만
     low: [], // 10점 미만
@@ -34,8 +36,8 @@ const getTeamAverageScores = (members: Member[]): number[] => {
   const teamList = Array.from(new Set(members.map((m) => m.team)));
   const averages: number[] = [];
 
-  teamList.forEach((teamId) => {
-    const teamMembers = members.filter((m) => m.team === teamId);
+  teamList.forEach((team) => {
+    const teamMembers = members.filter((m) => m.team === team);
     const averageScore =
       teamMembers.reduce((sum, member) => sum + member.score, 0) /
       teamMembers.length;

@@ -7,6 +7,7 @@ import React, { Suspense } from 'react';
 import { authOptions } from '../api/auth/authOptions';
 import { redirect } from 'next/navigation';
 import GridSpinner from '@/components/GridSpinner';
+import { getTeams } from '@/util/team';
 
 export default async function Layout({
   children,
@@ -17,7 +18,7 @@ export default async function Layout({
   const user = session?.user;
   if (!user) redirect('/');
 
-  const teamData: Team[] = await fetchTeams();
+  const teamData: Team[] = await getTeams();
   const teams = teamData
     .filter((team) => team.name !== 'Admin')
     .map((team) => team.name);

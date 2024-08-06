@@ -12,17 +12,20 @@ interface ResultProps {
 }
 
 export default function ResultForm({ result }: ResultProps) {
+  const total = useStore((state) => state.total);
+  if (!total) redirect('/');
+
   const router = useRouter();
 
   const { members } = useMember();
+  const totalData = calculateTotalData(members);
 
   const nickname = useStore((state) => state.nickname);
   const team = useStore((state) => state.team);
-  const total = useStore((state) => state.total);
 
-  if (!total) redirect('/');
-
-  const totalData = calculateTotalData(members);
+  const showDescriptions = () => {
+    return description(total, result);
+  };
 
   const handleGoHome = () => {
     router.push('/');
@@ -34,9 +37,7 @@ export default function ResultForm({ result }: ResultProps) {
         <div className='mb-4 text-lg'>
           <b>{nickname}님</b>께서 생각하시는 <b>이길영</b> 지원자는?
         </div>
-        <div className='font-bold text-xl mb-6'>
-          {description(total, result)}
-        </div>
+        <div className='font-bold text-xl mb-6'>{showDescriptions()}</div>
         <div>같은 팀의 결과를 확인해 보세요!</div>
       </div>
       <Chart

@@ -11,12 +11,10 @@ const description = (total: number, result: ResultType) => {
   }
 };
 
-const calculateTotalData = (
-  teamResult: Pick<Member, 'nickname' | 'score'>[]
-) => {
+const calculateTotalData = (members: Pick<Member, 'nickname' | 'score'>[]) => {
   const totalData = [0, 0, 0];
 
-  teamResult.forEach((member) => {
+  members.forEach((member) => {
     if (member.score >= 20) {
       totalData[0] += 1; // totalData의 0번째 요소에 1 더하기
     } else if (member.score < 20 && member.score >= 10) {
