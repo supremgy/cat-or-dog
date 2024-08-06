@@ -1,5 +1,5 @@
 import Chart from '@/components/Chart';
-import React, { Suspense } from 'react';
+import React from 'react';
 import {
   getTeamAverageScores,
   getTeamCountsByScoreRange,
@@ -7,7 +7,6 @@ import {
 } from '../../util/chart';
 import { Member } from '@/model/member';
 import { getAllMembers } from '@/util/member';
-import GridSpinner from '@/components/GridSpinner';
 
 export const metadata = {
   title: 'Dashboard',
@@ -19,8 +18,13 @@ export default async function DashBoardPage() {
   const labels = Array.from(new Set(members.map((member) => member.team)));
 
   const teamCountsByScoreRange = getTeamCountsByScoreRange(members);
+  console.log('teamCountsByScoreRange:', teamCountsByScoreRange);
+
   const teamAverageScores = getTeamAverageScores(members);
+  console.log('teamAverageScores:', teamAverageScores);
+
   const teamScoreStandardDeviations = getTeamScoreStandardDeviations(members);
+  console.log('teamScoreStandardDeviations:', teamScoreStandardDeviations);
 
   const totalDatabases = [
     {

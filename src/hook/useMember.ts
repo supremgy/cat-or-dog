@@ -7,30 +7,22 @@ import { useEffect } from 'react';
 
 const useGetMembersByTeam = () => {
   const team = useStore((state) => state.team);
-  const setIsLoading = useStore((state) => state.setIsLoading);
   const { data, isSuccess, isLoading, isFetching } = useQuery({
     queryKey: [queryKeys.MEMBER, team],
     queryFn: () => getMembersByTeam(team),
     staleTime: 0,
   });
-  useEffect(() => {
-    setIsLoading(isFetching);
-  }, [isFetching, setIsLoading]);
-  useEffect(() => {
-    setIsLoading(isLoading);
-  }, [isLoading, setIsLoading]);
   return isSuccess ? data : [];
 };
 
 const useUploadMember = () => {
   const setIsLoading = useStore((state) => state.setIsLoading);
-  const team = useStore((state) => state.team);
   const router = useRouter();
   return useMutation({
     mutationFn: uploadMember,
     onSuccess: () => {
+      router.push(`/result`);
       setIsLoading(false);
-      router.push(`/result?team=${team}`);
     },
   });
 };

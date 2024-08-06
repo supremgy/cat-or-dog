@@ -1,7 +1,7 @@
 import Introduce from '@/components/Introduce';
 import StartForm from '@/components/StartForm';
 import { Team } from '@/model/team';
-import { getTeams } from '@/service/team';
+import { getTeams } from '@/util/team';
 
 export const metadata = {
   title: 'Home',

@@ -15,12 +15,15 @@ export default function RatingQuestion({ survey }: StepProps) {
   const sumTotal = useStore((state) => state.setTotal);
   const [score, setScore] = useState<number | undefined>(undefined);
   const { uploadMember } = useMember();
-  const handleNext = async () => {
-    if (score && score > 10) {
-      alert('점수가 너무 높아요!');
+  const handleNext = () => {
+    if ((score && score < 1) || score === 0) {
+      onToast('점수가 너무 낮아요! 📉');
       return;
-    } else if (score && score < 1) {
-      alert('점수가 너무 낮아요!');
+    } else if (score && score > 10) {
+      onToast('점수가 너무 높아요! 📈');
+      return;
+    } else if (!score) {
+      onToast();
       return;
     }
 
@@ -62,7 +65,11 @@ export default function RatingQuestion({ survey }: StepProps) {
         type='number'
         className='w-1/5 h-10 text-lg rounded-md p-2 text-teal-600 mb-8 outline-none focus:border-2 focus:border-teal-600 duration-150'
         value={score}
-        onChange={(event) => setScore(Number(event.target.value))}
+        onChange={(event) => {
+          console.log(event.target.value);
+
+          setScore(Number(event.target.value));
+        }}
       />
       <ButtonForm
         nextText='완료'
